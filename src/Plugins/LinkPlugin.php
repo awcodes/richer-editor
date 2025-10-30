@@ -30,7 +30,7 @@ class LinkPlugin implements RichContentPlugin
     public function getTipTapPhpExtensions(): array
     {
         return [
-//            app(Link::class),
+            //            app(Link::class),
         ];
     }
 

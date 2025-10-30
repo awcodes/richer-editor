@@ -2,7 +2,6 @@
 
 namespace Awcodes\RicherEditor\Plugins;
 
-use Awcodes\RicherEditor\Extensions\Id;
 use Exception;
 use Filament\Actions\Action;
 use Filament\Forms\Components\RichEditor\Plugins\Contracts\RichContentPlugin;
