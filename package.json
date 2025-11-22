@@ -6,11 +6,12 @@
         "build": "node bin/build.js"
     },
     "devDependencies": {
+        "@floating-ui/dom": "^1.7.4",
         "@tiptap/core": "^3.0.0",
         "@tiptap/extension-code-block-lowlight": "^3.0.0",
-        "@tiptap/extension-emoji": "^3.10.1",
+        "@tiptap/extension-emoji": "^3.0.0",
         "@tiptap/extension-link": "^3.0.0",
-        "@tiptap/pm": "^3.0.0",
+        "@tiptap/suggestion": "^3.10.5",
         "crypto": "^1.0.1",
         "esbuild": "^0.25.5",
         "lowlight": "^3.3.0",

@@ -17,7 +17,6 @@ export default Node.create({
 
     addOptions() {
         return {
-            allowFullscreen: true,
             allow: 'autoplay; fullscreen; picture-in-picture',
             HTMLAttributes: {
                 class: 'embed',
@@ -35,13 +34,6 @@ export default Node.create({
             },
             src: {
                 default: null,
-            },
-            frameborder: {
-                default: 0,
-            },
-            allowfullscreen: {
-                default: this.options.allowFullscreen,
-                parseHTML: () => this.options.allowFullscreen,
             },
             allow: {
                 default: this.options.allow,
@@ -101,8 +93,6 @@ export default Node.create({
             src: HTMLAttributes.src,
             width: HTMLAttributes.responsive ? HTMLAttributes.width * 10 : HTMLAttributes.width,
             height: HTMLAttributes.responsive ? HTMLAttributes.height * 10 : HTMLAttributes.height,
-            allowfullscreen: HTMLAttributes.allowfullscreen,
-            frameborder: HTMLAttributes.frameborder,
             allow: HTMLAttributes.allow,
             style: HTMLAttributes.responsive ? `aspect-ratio: ${HTMLAttributes.width} / ${HTMLAttributes.height}; width: 100%; height: auto; pointer-events: none;` : 'pointer-events: none;',
         }]];

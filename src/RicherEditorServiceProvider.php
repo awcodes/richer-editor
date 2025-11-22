@@ -22,6 +22,8 @@ class RicherEditorServiceProvider extends PackageServiceProvider
     public function configurePackage(Package $package): void
     {
         $package->name(static::$name)
+            ->hasTranslations()
+            ->hasViews(static::$viewNamespace)
             ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->publishConfigFile()
@@ -34,14 +36,6 @@ class RicherEditorServiceProvider extends PackageServiceProvider
 
         if (file_exists($package->basePath("/../config/{$configFileName}.php"))) {
             $package->hasConfigFile();
-        }
-
-        if (file_exists($package->basePath('/../resources/lang'))) {
-            $package->hasTranslations();
-        }
-
-        if (file_exists($package->basePath('/../resources/views'))) {
-            $package->hasViews(static::$viewNamespace);
         }
     }
 
@@ -87,6 +81,10 @@ class RicherEditorServiceProvider extends PackageServiceProvider
     {
         return [
             Js::make(
+                id: 'rich-content-plugins/code-block-lowlight',
+                path: __DIR__ . '/../resources/dist/code-block-lowlight.js'
+            )->loadedOnRequest(),
+            Js::make(
                 id: 'rich-content-plugins/code-block-shiki',
                 path: __DIR__ . '/../resources/dist/code-block-shiki.js'
             )->loadedOnRequest(),
@@ -117,6 +115,10 @@ class RicherEditorServiceProvider extends PackageServiceProvider
             Js::make(
                 id: 'rich-content-plugins/emoji',
                 path: __DIR__ . '/../resources/dist/emoji.js'
+            )->loadedOnRequest(),
+            Js::make(
+                id: 'rich-content-plugins/slash-menu',
+                path: __DIR__ . '/../resources/dist/slash-menu.js'
             )->loadedOnRequest(),
         ];
     }

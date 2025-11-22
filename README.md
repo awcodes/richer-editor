@@ -5,6 +5,9 @@
 
 # A collection of extensions and tools to enhance the Filament Rich Editor field.
 
+> [!CAUTION]
+> This package is a work in progress at the moment and is not yet stable or recommended for production use.
+
 ## Installation
 
 You can install the package via composer:
@@ -62,11 +65,12 @@ RichEditor::make('content')
 ### Nested Tool Groups (Dropdowns)
 
 ```php
+use Awcodes\RicherEditor\Tools\ToolGroup;
 use Filament\Forms\Components\RichEditor\RichEditorTool;
 
 RichEditor::make('content')
     ->tools([
-        RichEditorToolDropdown::make('headingTools')
+        ToolGroup::make('headingTools')
             ->label('Headings')
             ->icon(Heroicon::H1)
             ->displayAsLabel()

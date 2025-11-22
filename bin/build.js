@@ -53,6 +53,7 @@ const extensions = [
     'figure',
     'code-block-shiki',
     'emoji',
+    'slash-menu',
 ]
 
 extensions.forEach((extension) => {
