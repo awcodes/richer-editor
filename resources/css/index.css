@@ -58,6 +58,27 @@
     }
 
     .display-as-label {
-        @apply px-2;
+        @apply px-2 flex items-center gap-1;
+
+        > svg {
+            @apply size-3;
+        }
     }
+
+    .fi-fo-rich-editor-custom-block-preview:has(.phiki) {
+        @apply p-0;
+
+        pre {
+            @apply p-4;
+        }
+    }
+}
+
+html.dark .phiki,
+html.dark .phiki span {
+    color: var(--phiki-dark-color) !important;
+    background-color: var(--phiki-dark-background-color) !important;
+    font-style: var(--phiki-dark-font-style) !important;
+    font-weight: var(--phiki-dark-font-weight) !important;
+    text-decoration: var(--phiki-dark-text-decoration) !important;
 }

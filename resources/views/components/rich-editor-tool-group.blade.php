@@ -21,7 +21,12 @@
     <x-slot:trigger>
         <button {!! $attributes->toHtml() !!}>
             @if ($displayAsLabel)
-                <span class="display-as-label">{{ $getLabel() }}</span>
+                <div class="display-as-label">
+                    <span>{{ $getLabel() }}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                    </svg>
+                </div>
             @else
                 {!! generate_icon_html($getIcon(), alias: $getIconAlias())->toHtml() !!}
             @endif

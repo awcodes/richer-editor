@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\RicherEditor\Plugins;
 
 use Awcodes\RicherEditor\Tools\SlashMenu;
+use Closure;
 use Exception;
 use Filament\Actions\Action;
 use Filament\Forms\Components\RichEditor\Plugins\Contracts\RichContentPlugin;
@@ -15,7 +18,9 @@ class SlashMenuPlugin implements RichContentPlugin
 {
     use EvaluatesClosures;
 
-    protected array | \Closure | null $items = null;
+    protected array|Closure|null $items = null;
+
+    protected string|Closure|null $noResultsMessage = null;
 
     public static function make(): static
     {
@@ -38,7 +43,7 @@ class SlashMenuPlugin implements RichContentPlugin
     public function getTipTapJsExtensions(): array
     {
         return [
-            FilamentAsset::getScriptSrc('rich-content-plugins/slash-menu', 'awcodes/richer-editor'),
+            FilamentAsset::getScriptSrc('richer-editor/slash-menu', 'awcodes/richer-editor'),
         ];
     }
 
@@ -49,7 +54,8 @@ class SlashMenuPlugin implements RichContentPlugin
     {
         return [
             SlashMenu::make('slashMenu')
-                ->label(__('richer-editor::plugins/slash-menu.label'))
+                ->hiddenLabel()
+                ->noResultsMessage($this->getNoResultsMessage())
                 ->items($this->getItems()),
         ];
     }
@@ -64,9 +70,16 @@ class SlashMenuPlugin implements RichContentPlugin
         return [];
     }
 
-    public function items(array | Closure $items): static
+    public function items(array|Closure $items): static
     {
         $this->items = $items;
+
+        return $this;
+    }
+
+    public function noResultsMessage(string|Closure $message): static
+    {
+        $this->noResultsMessage = $message;
 
         return $this;
     }
@@ -74,5 +87,10 @@ class SlashMenuPlugin implements RichContentPlugin
     public function getItems(): array
     {
         return $this->evaluate($this->items) ?? [];
+    }
+
+    public function getNoResultsMessage(): ?string
+    {
+        return $this->evaluate($this->noResultsMessage) ?? __('richer-editor::richer-editor.tools.slash_menu.no_results');
     }
 }

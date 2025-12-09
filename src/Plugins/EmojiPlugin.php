@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\RicherEditor\Plugins;
 
 use Awcodes\RicherEditor\Extensions\Emoji;
@@ -35,7 +37,7 @@ class EmojiPlugin implements RichContentPlugin
     public function getTipTapJsExtensions(): array
     {
         return [
-            FilamentAsset::getScriptSrc('rich-content-plugins/emoji', 'awcodes/richer-editor'),
+            FilamentAsset::getScriptSrc('richer-editor/emoji', 'awcodes/richer-editor'),
         ];
     }
 

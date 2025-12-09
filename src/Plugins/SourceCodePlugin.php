@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\RicherEditor\Plugins;
 
 use DOMDocument;
@@ -16,6 +18,8 @@ use Tiptap\Core\Extension;
 
 class SourceCodePlugin implements RichContentPlugin
 {
+    protected ?Width $modalWidth = null;
+
     public static function make(): static
     {
         return app(static::class);
@@ -63,7 +67,7 @@ class SourceCodePlugin implements RichContentPlugin
         return [
             Action::make('sourceCode')
                 ->modalHeading(__('richer-editor::richer-editor.source_code.label'))
-                ->modalWidth(Width::Full)
+                ->modalWidth(fn (): Width => $this->getModalWidth())
                 ->fillForm(function (array $arguments): array {
                     if (! $arguments['source']) {
                         return ['source' => '<p></p>'];
@@ -74,7 +78,7 @@ class SourceCodePlugin implements RichContentPlugin
                     $dom->loadHTML($arguments['source']);
                     $bodyContent = '';
                     foreach ($dom->getElementsByTagName('body')->item(0)->childNodes as $node) {
-                        $bodyContent .= $dom->saveXML($node) . "\n";
+                        $bodyContent .= $dom->saveXML($node)."\n";
                     }
                     $prettySource = trim($bodyContent);
 
@@ -84,6 +88,7 @@ class SourceCodePlugin implements RichContentPlugin
                     CodeEditor::make('source')
                         ->hiddenLabel()
                         ->language(CodeEditor\Enums\Language::Html)
+                        ->wrap()
                         ->extraAttributes(['class' => 'source_code_editor']),
                 ])
                 ->action(function (RichEditor $component, array $arguments, array $data): void {
@@ -100,5 +105,17 @@ class SourceCodePlugin implements RichContentPlugin
                 })
                 ->stickyModalFooter(),
         ];
+    }
+
+    public function width(Width $width): static
+    {
+        $this->modalWidth = $width;
+
+        return $this;
+    }
+
+    public function getModalWidth(): Width
+    {
+        return $this->modalWidth ?? Width::FiveExtraLarge;
     }
 }

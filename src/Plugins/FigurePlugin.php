@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\RicherEditor\Plugins;
 
 use Awcodes\RicherEditor\Extensions\Figure;
@@ -11,6 +13,9 @@ use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Support\HtmlString;
 use Tiptap\Core\Extension;
 
+/**
+ * @experimental This plugin is not ready for production use yet. Need to figure out proper rendering in the Figure extension. Possible bug with native Filament attachMedia tool. Possible solution https://github.com/ueberdosis/tiptap-php/pull/83
+ */
 class FigurePlugin implements RichContentPlugin
 {
     public static function make(): static
@@ -36,7 +41,7 @@ class FigurePlugin implements RichContentPlugin
     public function getTipTapJsExtensions(): array
     {
         return [
-            FilamentAsset::getScriptSrc('rich-content-plugins/figure', 'awcodes/richer-editor'),
+            FilamentAsset::getScriptSrc('richer-editor/figure', 'awcodes/richer-editor'),
         ];
     }
 

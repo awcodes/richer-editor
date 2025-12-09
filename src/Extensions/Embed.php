@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\RicherEditor\Extensions;
 
 use Tiptap\Core\Node;
@@ -45,7 +47,7 @@ class Embed extends Node
             ],
             'responsive' => [
                 'default' => true,
-                'parseHTML' => fn ($DOMNode) => str_contains($DOMNode->getAttribute('class'), 'responsive'),
+                'parseHTML' => fn ($DOMNode): bool => str_contains((string) $DOMNode->getAttribute('class'), 'responsive'),
             ],
         ];
     }

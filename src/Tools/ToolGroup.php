@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\RicherEditor\Tools;
 
 use Closure;
@@ -9,18 +11,18 @@ class ToolGroup extends RichEditorTool
 {
     protected string $view = 'richer-editor::components.rich-editor-tool-group';
 
-    protected array | Closure | null $items = null;
+    protected array|Closure|null $items = null;
 
-    protected bool | Closure | null $displayAsLabel = null;
+    protected bool|Closure|null $displayAsLabel = null;
 
-    public function displayAsLabel(bool | Closure | null $displayAsLabel = true): static
+    public function displayAsLabel(bool|Closure|null $displayAsLabel = true): static
     {
         $this->displayAsLabel = $displayAsLabel;
 
         return $this;
     }
 
-    public function items(array | Closure | null $items): static
+    public function items(array|Closure|null $items): static
     {
         $this->items = $items;
 

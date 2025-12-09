@@ -4,6 +4,7 @@
     "keywords": [
         "awcodes",
         "laravel",
+        "filament",
         "filamentphp",
         "richer-editor"
     ],
@@ -23,8 +24,9 @@
     "require": {
         "php": "^8.2",
         "ext-dom": "*",
-        "filament/forms": "^4.0",
+        "filament/forms": "^4.3",
         "league/html-to-markdown": "*",
+        "phiki/phiki": "^2.0",
         "spatie/laravel-package-tools": "^1.15.0"
     },
     "require-dev": {
@@ -44,8 +46,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Awcodes\\RicherEditor\\": "src/",
-            "Awcodes\\RicherEditor\\Database\\Factories\\": "database/factories/"
+            "Awcodes\\RicherEditor\\": "src/"
         }
     },
     "autoload-dev": {
@@ -80,6 +81,6 @@
             "phpstan/extension-installer": true
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\RicherEditor\Extensions;
 
+use DOMElement;
 use Tiptap\Core\Node;
 use Tiptap\Utils\HTML;
 
@@ -21,25 +24,19 @@ class Figure extends Node
         return [
             'src' => [
                 'default' => null,
-                'parseHTML' => function ($DOMNode) {
-                    return $DOMNode->firstChild->getAttribute('src');
-                },
+                'parseHTML' => fn ($DOMNode) => $DOMNode->firstChild->getAttribute('src'),
             ],
             'alt' => [
                 'default' => null,
-                'parseHTML' => function ($DOMNode) {
-                    return $DOMNode->firstChild->getAttribute('alt');
-                },
+                'parseHTML' => fn ($DOMNode) => $DOMNode->firstChild->getAttribute('alt'),
             ],
             'title' => [
                 'default' => null,
-                'parseHTML' => function ($DOMNode) {
-                    return $DOMNode->firstChild->getAttribute('title');
-                },
+                'parseHTML' => fn ($DOMNode) => $DOMNode->firstChild->getAttribute('title'),
             ],
             'id' => [
                 'parseHTML' => fn ($DOMNode) => $DOMNode->firstChild->getAttribute('data-id') ?: null,
-                'renderHTML' => fn ($attributes) => ['data-id' => $attributes->id ?? null],
+                'renderHTML' => fn ($attributes): array => ['data-id' => $attributes->id ?? null],
             ],
         ];
     }
@@ -49,7 +46,7 @@ class Figure extends Node
         return [
             [
                 'tag' => 'figure',
-                'contentElement' => 'figcaption',
+                'contentElement' => fn ($domNode): DOMElement => new DOMElement('figcaption', $domNode->lastChild->textContent),
             ],
         ];
     }
@@ -59,7 +56,7 @@ class Figure extends Node
         return [
             'figure',
             $this->options['HTMLAttributes'],
-            ['img', HTML::mergeAttributes($HTMLAttributes)],
+            ['img', HTML::mergeAttributes($HTMLAttributes), null],
             ['figcaption', 0],
         ];
     }

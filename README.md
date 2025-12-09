@@ -19,13 +19,22 @@ composer require awcodes/richer-editor
 > [!IMPORTANT]
 > If you have not set up a custom theme and are using Filament Panels follow the instructions in the [Filament Docs](https://filamentphp.com/docs/4.x/styling/overview#creating-a-custom-theme) first.
 
-After setting up a custom theme add the plugin's css to your theme.css file or your app.css file if using the standalone packages.
+After setting up a custom theme add the plugin's css and views to your theme.css file or your app.css file if using the standalone packages.
 
 ```css
 @import '../../../../vendor/awcodes/richer-editor/resources/css/index.css';
+
+@source '../../../../vendor/awcodes/richer-editor/resources/views/**/*.blade.php';
 ```
 
-## Usage
+## Editor Usage
+
+> [!WARNING]
+> The following plugins are experimental and should not be used at the moment. See their docblocks for more information.
+> - CodeBlockLowlightPlugin
+> - CodeBlockShikiPlugin
+> - FigurePlugin
+> - VideoPlugin
 
 ### Plugins
 
@@ -40,7 +49,7 @@ use Awcodes\RicherEditor\Plugins\SourceCodePlugin;
 
 RichEditor::make('content')
     ->plugins([
-        DebugPlugin::make(),
+        DebugPlugin::make(), // only works in local environment
         EmbedPlugin::make(),
         EmojiPlugin::make(), // Doesn't have a toolbar button
         FullScreenPlugin::make(),
@@ -86,7 +95,7 @@ RichEditor::make('content')
     ])
 ```
 
-### Prebuild Tools
+### Prebuilt Tools
 
 * Heading Four Tool
 * Heading Five Tool
@@ -106,6 +115,101 @@ RichEditor::make('content')
     ->toolbarButtons([
         ['h4', 'h5', 'h6'],
     ])
+```
+
+### Prebuilt Blocks
+
+#### Highlighted Code Block (Phiki)
+
+```php
+use Awcodes\RicherEditor\Blocks\HighlightedCodeBlock;
+
+RichEditor::make('content')
+    ->blocks([
+        HighlightedCodeBlock::class,
+    ])
+
+// when rendering the content you can change the theme using any of Phiki's supported themes. See https://phiki.dev/multi-themes
+
+use Awcodes\RicherEditor\Blocks\HighlightedCodeBlock;
+use Phiki\Theme\Theme;
+
+RichContentRenderer::make($content)
+    ->customBlocks([
+        HighlightedCodeBlock::class => [
+            'light' => Theme::GithubLight,
+            'dark' => Theme::GithubDark,
+        ],
+    ])
+    ->toHtml()
+```
+
+## Rendering Usage
+
+### Rendering Headings as links
+
+```php
+use Filament\Forms\Components\RichEditor\RichContentRenderer;
+
+RichContentRenderer::make($content)
+    ->linkHeadings(level: 3, wrap: false)
+    ->toHtml()
+```
+
+### Rendering as Markdown
+
+This feature uses [HTML To Markdown for PHP](https://github.com/thephpleague/html-to-markdown) by [thephpleague](https://github.com/thephpleague). Please see their documentation for available options.
+
+```php
+use Filament\Forms\Components\RichEditor\RichContentRenderer;
+
+RichContentRenderer::make($content)
+    ->toMarkdown(options: [])
+```
+
+### Rendering Table of Contents
+
+```php
+use Awcodes\RicherEditor\Support\TableOfContents;
+
+TableOfContents::make($content)
+    ->asHtml();
+    
+/** or as an array to handle the output yourself */
+
+$toc = TableOfContents::make($content)
+    ->asArray();
+```
+
+## Utilities
+
+### Rich Content Faker
+
+```php
+use Awcodes\RicherEditor\Support\RichContentFaker;
+
+$richContent = RichContentFaker::make()
+    ->heading(level: 2)
+    ->paragraphs(count: 1, withRandomLinks: false)
+    ->link()
+    ->lead(pargraphs: 1)
+    ->small()
+    ->unorderedList(count: 1)
+    ->orderedList(count: 1)
+    ->image(source: null, width: 1280, height: 720)
+    ->details(open: false)
+    ->code(className: 'language-php')
+    ->codeBlock(language: 'sh', prefix: 'language-')
+    ->blockquote()
+    ->hr()
+    ->br()
+    ->table(cols: null)
+    ->grid(cols: [1,1,1], breakpoint: 'md')
+    ->emptyParagraph()
+    // rendering (only use one)
+    ->asHtml()
+    ->asJson()
+    ->asText();
 ```
 
 ## Testing
@@ -129,6 +233,7 @@ Please review [our security policy](.github/SECURITY.md) on how to report securi
 ## Credits
 
 - [Adam Weston](https://github.com/awcodes)
+- [The League of Extraordinary Packages](https://github.com/thephpleague)
 - [All Contributors](../../contributors)
 
 ## License

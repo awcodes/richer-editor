@@ -21,7 +21,7 @@ const SlashMenu = Extension.create({
                 char: '/',
                 pluginKey,
                 ...getSlashMenuSuggestion({
-                    noItemsSearchResultsMessage: 'No results found',
+                    noItemsSearchResultsMessage: this.editor.editorView.dom.closest('[x-data]').querySelector('[data-slash-menu-items]').getAttribute('data-slash-menu-no-results'),
                 }),
             }),
         ]

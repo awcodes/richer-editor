@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\RicherEditor\Plugins;
 
 use Awcodes\RicherEditor\Extensions\Id;
@@ -33,7 +35,7 @@ class IdPlugin implements RichContentPlugin
     public function getTipTapJsExtensions(): array
     {
         return [
-            FilamentAsset::getScriptSrc('rich-content-plugins/id', 'awcodes/richer-editor'),
+            FilamentAsset::getScriptSrc('richer-editor/id', 'awcodes/richer-editor'),
         ];
     }
 

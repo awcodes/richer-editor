@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\RicherEditor\Tests;
 
 use Awcodes\RicherEditor\RicherEditorServiceProvider;
@@ -28,8 +30,13 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Awcodes\\RicherEditor\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'Awcodes\\RicherEditor\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
+    }
+
+    public function getEnvironmentSetUp($app): void
+    {
+        $app['config']->set('database.default', 'testing');
     }
 
     protected function getPackageProviders($app): array
@@ -53,13 +60,8 @@ class TestCase extends Orchestra
         return $providers;
     }
 
-    public function getEnvironmentSetUp($app): void
-    {
-        $app['config']->set('database.default', 'testing');
-    }
-
     protected function defineDatabaseMigrations(): void
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
     }
 }

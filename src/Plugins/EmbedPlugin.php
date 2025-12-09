@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\RicherEditor\Plugins;
 
 use Awcodes\RicherEditor\Extensions\Embed;
@@ -47,7 +49,7 @@ class EmbedPlugin implements RichContentPlugin
     public function getTipTapJsExtensions(): array
     {
         return [
-            FilamentAsset::getScriptSrc('rich-content-plugins/embed', 'awcodes/richer-editor'),
+            FilamentAsset::getScriptSrc('richer-editor/embed', 'awcodes/richer-editor'),
         ];
     }
 
@@ -82,7 +84,7 @@ class EmbedPlugin implements RichContentPlugin
                 ])
                 ->schema([
                     TextInput::make('src')
-                        ->label(fn () => trans('richer-editor::richer-editor.embed.url'))
+                        ->label(fn (): \Illuminate\Contracts\Translation\Translator|string|array => trans('richer-editor::richer-editor.embed.url'))
                         ->live()
                         ->required(),
                     CheckboxList::make('options')
@@ -123,7 +125,7 @@ class EmbedPlugin implements RichContentPlugin
                             ];
                         }),
                     TimePicker::make('start_at')
-                        ->label(fn () => trans('richer-editor::richer-editor.embed.start_at'))
+                        ->label(fn (): \Illuminate\Contracts\Translation\Translator|string|array => trans('richer-editor::richer-editor.embed.start_at'))
                         ->live()
                         ->date(false)
                         ->visible(fn (Get $get): bool => str_contains((string) $get('src'), 'youtu'))
@@ -133,9 +135,9 @@ class EmbedPlugin implements RichContentPlugin
                             }
 
                             $state = CarbonInterval::seconds($state)->cascade();
-                            $component->state(Carbon::parse($state->h . ':' . $state->i . ':' . $state->s)->format('Y-m-d H:i:s'));
+                            $component->state(Carbon::parse($state->h.':'.$state->i.':'.$state->s)->format('Y-m-d H:i:s'));
                         })
-                        ->dehydrateStateUsing(function ($state): int | float {
+                        ->dehydrateStateUsing(function ($state): int|float {
                             if (! $state) {
                                 return 0;
                             }
@@ -145,7 +147,7 @@ class EmbedPlugin implements RichContentPlugin
                     Checkbox::make('responsive')
                         ->default(true)
                         ->live()
-                        ->label(fn () => trans('richer-editor::richer-editor.embed.responsive'))
+                        ->label(fn (): \Illuminate\Contracts\Translation\Translator|string|array => trans('richer-editor::richer-editor.embed.responsive'))
                         ->afterStateUpdated(function (callable $set, $state): void {
                             if ($state) {
                                 $set('width', '16');
@@ -160,12 +162,12 @@ class EmbedPlugin implements RichContentPlugin
                         TextInput::make('width')
                             ->live()
                             ->required()
-                            ->label(fn () => trans('richer-editor::richer-editor.embed.width'))
+                            ->label(fn (): \Illuminate\Contracts\Translation\Translator|string|array => trans('richer-editor::richer-editor.embed.width'))
                             ->default('16'),
                         TextInput::make('height')
                             ->live()
                             ->required()
-                            ->label(fn () => trans('richer-editor::richer-editor.embed.height'))
+                            ->label(fn (): \Illuminate\Contracts\Translation\Translator|string|array => trans('richer-editor::richer-editor.embed.height'))
                             ->default('9'),
                     ])->columns(['md' => 2]),
                 ])

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\RicherEditor\Plugins;
 
 use Exception;
@@ -44,7 +46,7 @@ class FullScreenPlugin implements RichContentPlugin
                 ->jsHandler('window.toggleRichEditorFullscreen($root)')
                 ->extraAttributes([
                     'class' => 'fullscreen-toggle',
-                    'x-load-js' => '[\'' . FilamentAsset::getScriptSrc('rich-content-plugins/fullscreen', 'awcodes/richer-editor') . '\']',
+                    'x-load-js' => '[\''.FilamentAsset::getScriptSrc('richer-editor/fullscreen', 'awcodes/richer-editor').'\']',
                 ]),
         ];
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\RicherEditor\Extensions;
 
 use Tiptap\Core\Node;
@@ -29,63 +31,43 @@ class Video extends Node
         return [
             'responsive' => [
                 'default' => true,
-                'parseHTML' => function ($DOMNode) {
-                    return str_contains($DOMNode->getAttribute('class'), 'responsive') ?? false;
-                },
+                'parseHTML' => fn ($DOMNode): bool => str_contains((string) $DOMNode->getAttribute('class'), 'responsive') ?? false,
             ],
             'style' => [
                 'default' => null,
-                'parseHTML' => function ($DOMNode) {
-                    return $DOMNode->firstChild->getAttribute('style');
-                },
+                'parseHTML' => fn ($DOMNode) => $DOMNode->firstChild->getAttribute('style'),
             ],
             'src' => [
                 'default' => null,
-                'parseHTML' => function ($DOMNode) {
-                    return $DOMNode->firstChild->getAttribute('src');
-                },
+                'parseHTML' => fn ($DOMNode) => $DOMNode->firstChild->getAttribute('src'),
             ],
             'width' => [
                 'default' => $this->options['width'],
-                'parseHTML' => function ($DOMNode) {
-                    return $DOMNode->firstChild->getAttribute('width');
-                },
+                'parseHTML' => fn ($DOMNode) => $DOMNode->firstChild->getAttribute('width'),
             ],
             'height' => [
                 'default' => $this->options['height'],
-                'parseHTML' => function ($DOMNode) {
-                    return $DOMNode->firstChild->getAttribute('height');
-                },
+                'parseHTML' => fn ($DOMNode) => $DOMNode->firstChild->getAttribute('height'),
             ],
             'autoplay' => [
                 'default' => null,
-                'parseHTML' => function ($DOMNode) {
-                    return $DOMNode->firstChild->getAttribute('autoplay');
-                },
+                'parseHTML' => fn ($DOMNode) => $DOMNode->firstChild->getAttribute('autoplay'),
             ],
             'loop' => [
                 'default' => null,
-                'parseHTML' => function ($DOMNode) {
-                    return $DOMNode->firstChild->getAttribute('loop');
-                },
+                'parseHTML' => fn ($DOMNode) => $DOMNode->firstChild->getAttribute('loop'),
             ],
             'controls' => [
                 'default' => null,
-                'parseHTML' => function ($DOMNode) {
-                    return $DOMNode->firstChild->getAttribute('controls');
-                },
+                'parseHTML' => fn ($DOMNode) => $DOMNode->firstChild->getAttribute('controls'),
             ],
             'data-aspect-width' => [
                 'default' => null,
-                'parseHTML' => function ($DOMNode) {
-                    return $DOMNode->firstChild->getAttribute('data-aspect-width');
-                },
+                'parseHTML' => fn ($DOMNode) => $DOMNode->firstChild->getAttribute('data-aspect-width'),
             ],
             'data-aspect-height' => [
                 'default' => null,
-                'parseHTML' => function ($DOMNode) {
-                    return $DOMNode->firstChild->getAttribute('data-aspect-height');
-                },
+                'parseHTML' => fn ($DOMNode) => $DOMNode->firstChild->getAttribute('data-aspect-height'),
             ],
         ];
     }

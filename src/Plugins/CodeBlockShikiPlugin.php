@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\RicherEditor\Plugins;
 
 use Exception;
@@ -11,6 +13,9 @@ use Filament\Support\Icons\Heroicon;
 use Tiptap\Core\Extension;
 use Tiptap\Nodes\CodeBlockHighlight;
 
+/**
+ * @experimental This plugin is not ready for production use yet due to an error with conflicting prosemirror versions. See https://github.com/ueberdosis/tiptap/issues/5074
+ */
 class CodeBlockShikiPlugin implements RichContentPlugin
 {
     public static function make(): static
@@ -24,9 +29,9 @@ class CodeBlockShikiPlugin implements RichContentPlugin
     public function getTipTapPhpExtensions(): array
     {
         return [
-//            app(CodeBlockHighlight::class, [
-//                'languageClassPrefix' => 'language-',
-//            ]),
+            //            app(CodeBlockHighlight::class, [
+            //                'languageClassPrefix' => 'language-',
+            //            ]),
         ];
     }
 
@@ -38,7 +43,7 @@ class CodeBlockShikiPlugin implements RichContentPlugin
     public function getTipTapJsExtensions(): array
     {
         return [
-            FilamentAsset::getScriptSrc('rich-content-plugins/code-block-shiki', 'awcodes/richer-editor'),
+            FilamentAsset::getScriptSrc('richer-editor/code-block-shiki', 'awcodes/richer-editor'),
         ];
     }
 

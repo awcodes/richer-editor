@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Awcodes\RicherEditor\Plugins;
 
 use Awcodes\RicherEditor\Extensions\Video;
@@ -19,6 +21,9 @@ use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Icons\Heroicon;
 use Tiptap\Core\Extension;
 
+/**
+ * @experimental This plugin is not ready for production use yet. Need to tie it into a file upload system.
+ */
 class VideoPlugin implements RichContentPlugin
 {
     public static function make(): static
@@ -44,7 +49,7 @@ class VideoPlugin implements RichContentPlugin
     public function getTipTapJsExtensions(): array
     {
         return [
-            FilamentAsset::getScriptSrc('rich-content-plugins/video', 'awcodes/richer-editor'),
+            FilamentAsset::getScriptSrc('richer-editor/video', 'awcodes/richer-editor'),
         ];
     }
 
@@ -82,31 +87,27 @@ class VideoPlugin implements RichContentPlugin
                 ])
                 ->schema([
                     TextInput::make('src')
-                        ->label(fn () => trans('richer-editor::richer-editor.video.url'))
+                        ->label(fn (): \Illuminate\Contracts\Translation\Translator|string|array => trans('richer-editor::richer-editor.video.url'))
                         ->live()
                         ->required(),
                     CheckboxList::make('options')
                         ->hiddenLabel()
                         ->gridDirection('row')
                         ->columns(3)
-                        ->options(function (Get $get): array {
-                            return [
-                                'autoplay' => trans('richer-editor::richer-editor.video.autoplay'),
-                                'loop' => trans('richer-editor::richer-editor.video.loop'),
-                                'controls' => trans('richer-editor::richer-editor.video.controls'),
-                            ];
-                        })
-                        ->dehydrateStateUsing(function (Get $get, $state): array {
-                            return [
-                                'autoplay' => in_array('autoplay', $state) ? 1 : 0,
-                                'loop' => in_array('loop', $state) ? 1 : 0,
-                                'controls' => in_array('controls', $state) ? 1 : 0,
-                            ];
-                        }),
+                        ->options(fn (Get $get): array => [
+                            'autoplay' => trans('richer-editor::richer-editor.video.autoplay'),
+                            'loop' => trans('richer-editor::richer-editor.video.loop'),
+                            'controls' => trans('richer-editor::richer-editor.video.controls'),
+                        ])
+                        ->dehydrateStateUsing(fn (Get $get, $state): array => [
+                            'autoplay' => in_array('autoplay', $state) ? 1 : 0,
+                            'loop' => in_array('loop', $state) ? 1 : 0,
+                            'controls' => in_array('controls', $state) ? 1 : 0,
+                        ]),
                     Checkbox::make('responsive')
                         ->default(true)
                         ->live()
-                        ->label(fn () => trans('richer-editor::richer-editor.video.responsive'))
+                        ->label(fn (): \Illuminate\Contracts\Translation\Translator|string|array => trans('richer-editor::richer-editor.video.responsive'))
                         ->afterStateUpdated(function (callable $set, $state): void {
                             if ($state) {
                                 $set('width', '16');
@@ -121,12 +122,12 @@ class VideoPlugin implements RichContentPlugin
                         TextInput::make('width')
                             ->live()
                             ->required()
-                            ->label(fn () => trans('richer-editor::richer-editor.video.width'))
+                            ->label(fn (): \Illuminate\Contracts\Translation\Translator|string|array => trans('richer-editor::richer-editor.video.width'))
                             ->default('16'),
                         TextInput::make('height')
                             ->live()
                             ->required()
-                            ->label(fn () => trans('richer-editor::richer-editor.video.height'))
+                            ->label(fn (): \Illuminate\Contracts\Translation\Translator|string|array => trans('richer-editor::richer-editor.video.height'))
                             ->default('9'),
                     ])->columns(['md' => 2]),
                 ])
