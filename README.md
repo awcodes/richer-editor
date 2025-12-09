@@ -5,9 +5,6 @@
 
 # A collection of extensions and tools to enhance the Filament Rich Editor field.
 
-> [!CAUTION]
-> This package is a work in progress at the moment and is not yet stable or recommended for production use.
-
 ## Installation
 
 You can install the package via composer:
