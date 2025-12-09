@@ -231,6 +231,7 @@ Please review [our security policy](.github/SECURITY.md) on how to report securi
 
 - [Adam Weston](https://github.com/awcodes)
 - [The League of Extraordinary Packages](https://github.com/thephpleague)
+- [Phiki](https://github.com/phikiphp/phiki)
 - [All Contributors](../../contributors)
 
 ## License
