@@ -74,13 +74,14 @@ class SourceCodePlugin implements RichContentPlugin
                     }
 
                     $dom = new DOMDocument;
+                    $dom->encoding = 'UTF-8';
                     $dom->preserveWhiteSpace = false;
-                    $dom->loadHTML($arguments['source']);
+                    $dom->loadHTML(mb_convert_encoding($arguments['source'], 'HTML-ENTITIES', 'UTF-8'));
                     $bodyContent = '';
                     foreach ($dom->getElementsByTagName('body')->item(0)->childNodes as $node) {
                         $bodyContent .= $dom->saveXML($node)."\n";
                     }
-                    $prettySource = trim($bodyContent);
+                    $prettySource = mb_trim($bodyContent);
 
                     return ['source' => $prettySource];
                 })
