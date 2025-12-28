@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Awcodes\RicherEditor\Plugins;
 
+use Closure;
 use DOMDocument;
 use Exception;
 use Filament\Actions\Action;
@@ -12,13 +13,18 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\RichEditor\EditorCommand;
 use Filament\Forms\Components\RichEditor\Plugins\Contracts\RichContentPlugin;
 use Filament\Forms\Components\RichEditor\RichEditorTool;
+use Filament\Support\Concerns\EvaluatesClosures;
 use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 use Tiptap\Core\Extension;
 
 class SourceCodePlugin implements RichContentPlugin
 {
+    use EvaluatesClosures;
+
     protected ?Width $modalWidth = null;
+
+    protected string|Closure|null $encoding = null;
 
     public static function make(): static
     {
@@ -74,9 +80,9 @@ class SourceCodePlugin implements RichContentPlugin
                     }
 
                     $dom = new DOMDocument;
-                    $dom->encoding = 'UTF-8';
+                    $dom->encoding = $this->getEncoding();
                     $dom->preserveWhiteSpace = false;
-                    $dom->loadHTML(mb_convert_encoding($arguments['source'], 'HTML-ENTITIES', 'UTF-8'));
+                    $dom->loadHTML(mb_convert_encoding($arguments['source'], 'HTML-ENTITIES', $this->getEncoding()));
                     $bodyContent = '';
                     foreach ($dom->getElementsByTagName('body')->item(0)->childNodes as $node) {
                         $bodyContent .= $dom->saveXML($node)."\n";
@@ -118,5 +124,17 @@ class SourceCodePlugin implements RichContentPlugin
     public function getModalWidth(): Width
     {
         return $this->modalWidth ?? Width::FiveExtraLarge;
+    }
+
+    public function encoding(string|Closure $encoding): static
+    {
+        $this->encoding = $encoding;
+
+        return $this;
+    }
+
+    public function getEncoding(): string
+    {
+        return $this->evaluate($this->encoding) ?? 'UTF-8';
     }
 }
