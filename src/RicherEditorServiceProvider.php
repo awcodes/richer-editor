@@ -63,6 +63,22 @@ class RicherEditorServiceProvider extends PackageServiceProvider
             );
         });
 
+        RichContentRenderer::macro('phikiCodeBlocks', function (): static {
+            $this->nodeProcessors[] = function (&$node): void {
+                if ($node->type !== 'codeBlock') {
+                    return;
+                }
+
+                if (! $node?->attrs->language) {
+                    return;
+                }
+
+                $node->type = 'phikiCodeBlock';
+            };
+
+            return $this;
+        });
+
         RichContentRenderer::macro('linkHeadings', function (int $level = 3, bool $wrap = false): static {
             $this->nodeProcessors[] = function (&$node) use ($level, $wrap): void {
                 if ($node->type !== 'heading') {

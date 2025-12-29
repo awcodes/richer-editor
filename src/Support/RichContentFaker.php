@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Awcodes\RicherEditor\Support;
 
-use Awcodes\RicherEditor\Concerns\CanInsertElements;
 use Faker\Factory;
 use Faker\Generator;
 use Filament\Forms\Components\RichEditor\RichContentRenderer;
 use Illuminate\Support\Str;
+use Illuminate\Support\Traits\Macroable;
 
 class RichContentFaker
 {
-    use CanInsertElements;
+    use Macroable;
 
     protected Generator $faker;
 
@@ -82,9 +82,36 @@ class RichContentFaker
         return $this;
     }
 
-    public function paragraphs(int $count = 1, bool $links = false, bool $lead = false, bool $small = false, bool $code = false): static
-    {
-        $this->output .= $this->generateParagraphs(count: $count, links: $links, lead: $lead, small: $small, code: $code);
+    public function paragraphs(
+        int $count = 1,
+        bool $links = false,
+        bool $code = false,
+        bool $bold = false,
+        bool $italic = false,
+        bool $underline = false,
+        bool $strike = false,
+        bool $subscript = false,
+        bool $superscript = false,
+        bool $lead = false,
+        bool $small = false,
+        ?array $mergeTags = null,
+        bool $highlight = false,
+    ): static {
+        $this->output .= $this->generateParagraphs(
+            count: $count,
+            links: $links,
+            bold: $bold,
+            italic: $italic,
+            underline: $underline,
+            strike: $strike,
+            subscript: $subscript,
+            superscript: $superscript,
+            code: $code,
+            lead: $lead,
+            small: $small,
+            mergeTags: $mergeTags ?? [],
+            highlight: $highlight,
+        );
 
         return $this;
     }
@@ -114,10 +141,8 @@ class RichContentFaker
     {
         $type = $ordered ? 'ol' : 'ul';
 
-        $items = collect(value: range(start: 0, end: $count))
-            ->map(callback: function () use ($links) {
-                return $this->wrapWithElement(element: 'li', content: $this->generateParagraphs(links: $links));
-            })
+        $items = collect(value: range(start: 0, end: $count - 1))
+            ->map(callback: fn (): string => $this->wrapWithElement(element: 'li', content: $this->generateParagraphs(links: $links)))
             ->implode(value: '');
 
         $this->output .= '<'.$type.'>'.$items.'</'.$type.'>';
@@ -136,9 +161,9 @@ class RichContentFaker
         return $this;
     }
 
-    public function details(bool $open = false): static
+    public function details(bool $open = false, bool $links = false): static
     {
-        $content = $this->generateParagraphs(count: mt_rand(1, 3), links: true);
+        $content = $this->generateParagraphs(count: mt_rand(1, 3), links: $links);
 
         $this->output .= '<details'.($open ? ' open' : null).'><summary>'.$this->faker->sentence().'</summary><div data-type="detailsContent">'.$content.'</div></details>';
 
@@ -154,7 +179,7 @@ class RichContentFaker
 
     public function blockquote(): static
     {
-        $this->output .= '<blockquote><p>'.$this->faker->paragraph().'</p>'.'</blockquote>';
+        $this->output .= '<blockquote>'.$this->generateParagraphs(mt_rand(1, 3)).'</p>'.'</blockquote>';
 
         return $this;
     }
@@ -197,7 +222,7 @@ class RichContentFaker
         $this->output .= '<div class="grid-layout" data-cols="'.count(value: $cols).'" data-from-breakpoint="'.$breakpoint.'" style="grid-template-columns: repeat('.count(value: $cols).', 1fr);">';
 
         foreach ($cols as $col) {
-            $this->output .= '<div class="grid-layout-col" data-col-span="'.$col.'" style="grid-column: span '.$col.';"><h2>'.Str::title(value: $this->faker->words(nb: mt_rand(3, 8), asText: true)).'</h2><p>'.$this->faker->paragraph().'</p></div>';
+            $this->output .= '<div class="grid-layout-col" data-col-span="'.$col.'" style="grid-column: span '.$col.';"><h2>'.Str::title(value: $this->faker->words(nb: mt_rand(3, 8), asText: true)).'</h2>'.$this->generateParagraphs(mt_rand(1, 3)).'</div>';
         }
 
         $this->output .= '</div>';
@@ -210,24 +235,25 @@ class RichContentFaker
         return '<a href="'.$this->faker->url().'">'.$this->faker->words(mt_rand(3, 8), true).'</a>';
     }
 
-    private function generateParagraphs(int $count = 1, bool $links = false, bool $lead = false, bool $small = false, bool $code = false): string
-    {
+    private function generateParagraphs(
+        int $count = 1,
+        bool $links = false,
+        bool $bold = false,
+        bool $italic = false,
+        bool $underline = false,
+        bool $strike = false,
+        bool $subscript = false,
+        bool $superscript = false,
+        bool $code = false,
+        bool $lead = false,
+        bool $small = false,
+        ?array $mergeTags = null,
+        bool $highlight = false,
+    ): string {
         $content = $this->faker->paragraphs($count);
 
-        if ($links) {
-            $content = collect($content)->map(function ($paragraph): string {
-                return $this->insertRandomAnchorTags($paragraph, 0.1);
-            });
-        }
-
-        if ($code) {
-            $content = collect($content)->map(function ($paragraph): string {
-                return $this->insertRandomCodeTags($paragraph, 0.1);
-            });
-        }
-
-        return collect($content)
-            ->map(function ($text) use ($lead, $small) {
+        $content = collect($content)
+            ->map(function ($text) use ($lead, $small): string {
                 if ($small) {
                     $text = $this->wrapWithElement('small', $text);
                 }
@@ -238,11 +264,58 @@ class RichContentFaker
 
                 return $this->wrapWithElement('p', $text);
             })->implode('');
+
+        $textArray = explode(' ', $content);
+        $count = count($textArray);
+
+        if ($bold) {
+            array_splice($textArray, mt_rand(1, $count - 1), 0, $this->wrapWithElement('strong', $this->faker->words(mt_rand(3, 8), asText: true)));
+        }
+
+        if ($italic) {
+            array_splice($textArray, mt_rand(1, $count - 1), 0, $this->wrapWithElement('em', $this->faker->words(mt_rand(3, 8), asText: true)));
+        }
+
+        if ($links) {
+            array_splice($textArray, mt_rand(1, $count - 1), 0, $this->generateLink());
+        }
+
+        if ($underline) {
+            array_splice($textArray, mt_rand(1, $count - 1), 0, $this->wrapWithElement('u', $this->faker->words(mt_rand(3, 8), asText: true)));
+        }
+
+        if ($strike) {
+            array_splice($textArray, mt_rand(1, $count - 1), 0, $this->wrapWithElement('s', $this->faker->words(mt_rand(3, 8), asText: true)));
+        }
+
+        if ($subscript) {
+            array_splice($textArray, mt_rand(1, $count - 1), 0, $this->wrapWithElement('sub', (string) $this->faker->randomNumber(1)));
+        }
+
+        if ($superscript) {
+            array_splice($textArray, mt_rand(1, $count - 1), 0, $this->wrapWithElement('sup', (string) $this->faker->randomNumber(1)));
+        }
+
+        if ($code) {
+            array_splice($textArray, mt_rand(1, $count - 1), 0, $this->wrapWithElement('code', $this->faker->words(mt_rand(1, 3), asText: true)));
+        }
+
+        if (filled($mergeTags)) {
+            foreach ($mergeTags as $tag) {
+                array_splice($textArray, mt_rand(1, $count - 1), 0, '{{ '.$tag.' }}');
+            }
+        }
+
+        if ($highlight) {
+            array_splice($textArray, mt_rand(1, $count - 1), 0, $this->wrapWithElement('mark', $this->faker->words(mt_rand(3, 8), asText: true)));
+        }
+
+        return implode(' ', $textArray);
     }
 
     private function wrapWithElement(string $element, string $content, array $attributes = []): string
     {
-        $attrs = collect($attributes)->map(fn ($value, $key) => $key.'="'.$value.'"')->implode(' ');
+        $attrs = collect($attributes)->map(fn ($value, $key): string => $key.'="'.$value.'"')->implode(' ');
 
         return '<'.$element.($attrs ? ' '.$attrs : '').'>'.$content.'</'.$element.'>';
     }

@@ -164,6 +164,23 @@ RichContentRenderer::make($content)
     ->toMarkdown(options: [])
 ```
 
+### Rendering native code blocks with Phiki syntax highlighting.
+
+> [!CAUTION]
+> This should **NOT** be used globally as it will not work with Filament's rich content attributes when storing/reading content in the database when in a form context.
+
+```php
+use Awcodes\RicherEditor\Support\RichContentRenderer;
+use Awcodes\RicherEditor\Plugins\PhikiCodeBlockPlugin;
+
+RichContentRenderer::make($content)
+    ->plugins([
+        PhikiCodeBlockPlugin::make(),
+    ])
+    ->phikiCodeBlocks()
+    ->toHtml();
+```
+
 ### Rendering Table of Contents
 
 ```php
@@ -187,14 +204,24 @@ use Awcodes\RicherEditor\Support\RichContentFaker;
 
 $richContent = RichContentFaker::make()
     ->heading(level: 2)
-    ->paragraphs(count: 1, withRandomLinks: false)
-    ->link()
-    ->lead(pargraphs: 1)
-    ->small()
-    ->unorderedList(count: 1)
-    ->orderedList(count: 1)
+    ->paragraphs(
+        count: 1, 
+        links: false, 
+        code: false, 
+        bold: false, 
+        italic: false, 
+        underline: false, 
+        strike: false, 
+        subscript: false, 
+        superscript: false, 
+        mergeTags: [], 
+        highlight: false
+    )
+    ->lead(pargraphs: 1, links: false)
+    ->small(pargraphs: 1, links: false)
+    ->list(count: 3, links: false, ordered: false)
     ->image(source: null, width: 1280, height: 720)
-    ->details(open: false)
+    ->details(open: false, links: false)
     ->code(className: 'language-php')
     ->codeBlock(language: 'sh', prefix: 'language-')
     ->blockquote()
@@ -202,6 +229,14 @@ $richContent = RichContentFaker::make()
     ->br()
     ->table(cols: null)
     ->grid(cols: [1,1,1], breakpoint: 'md')
+    ->customBlock(
+        id: 'batman', 
+        config: [
+            'name' => 'Batman', 
+            'color' => 'black', 
+            'side' => 'hero'
+        ]
+    )
     ->emptyParagraph()
     // rendering (only use one)
     ->asHtml()
