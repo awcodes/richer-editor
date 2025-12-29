@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Awcodes\RicherEditor\Blocks;
 
+use Awcodes\RicherEditor\Support\Phiki\PrismDefenseTransformer;
 use Filament\Actions\Action;
 use Filament\Forms\Components\CodeEditor;
 use Filament\Forms\Components\RichEditor\RichContentCustomBlock;
@@ -55,7 +56,7 @@ class HighlightedCodeBlock extends RichContentCustomBlock
                 'light' => Theme::GithubLight,
                 'dark' => Theme::GithubDark,
             ]
-        );
+        )->transformer(new PrismDefenseTransformer());
 
         return view('richer-editor::components.blocks.highlighted-code.index', [
             'code' => $code,
@@ -67,8 +68,11 @@ class HighlightedCodeBlock extends RichContentCustomBlock
         $code = (new Phiki)->codeToHtml(
             code: $config['code'],
             grammar: Grammar::tryFrom(is_string($config['language']) ? $config['language'] : $config['language']->value),
-            theme: $data['theme'] ?? Theme::GithubDark
-        );
+            theme: $data['theme'] ?? [
+                'light' => Theme::GithubLight,
+                'dark' => Theme::GithubDark,
+            ]
+        )->transformer(new PrismDefenseTransformer());
 
         return view('richer-editor::components.blocks.highlighted-code.index', [
             'code' => $code,
