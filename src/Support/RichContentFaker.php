@@ -156,7 +156,7 @@ class RichContentFaker
             $source = 'https://picsum.photos/'.$width.'/'.$height;
         }
 
-        $this->output .= '<img src="'.$source.'" alt="'.$this->faker->sentence.'" />';
+        $this->output .= '<p><img src="'.$source.'" alt="'.$this->faker->sentence.'" /></p>';
 
         return $this;
     }
