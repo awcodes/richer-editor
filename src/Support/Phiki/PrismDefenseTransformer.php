@@ -51,7 +51,7 @@ class PrismDefenseTransformer extends AbstractTransformer
         // Remove language-* and lang-* classes from <pre> tags
         $html = preg_replace_callback(
             '/<pre\s+([^>]*?)class="([^"]*)"/',
-            function ($matches): string {
+            function (array $matches): string {
                 $beforeClass = $matches[1];
                 $classes = $matches[2];
 
