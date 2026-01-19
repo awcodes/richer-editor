@@ -3,7 +3,16 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/awcodes/richer-editor/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/awcodes/richer-editor/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/awcodes/richer-editor.svg?style=flat-square)](https://packagist.org/packages/awcodes/richer-editor)
 
-# A collection of extensions and tools to enhance the Filament Rich Editor field.
+# Richer Editor 
+
+A collection of extensions and tools to enhance the Filament Rich Editor field.
+
+## Compatibility
+
+| Package Version | Filament Version |
+|-----------------|------------------|
+| 1.x             | 4.x              |
+| 2.x             | 5.x              |
 
 ## Installation
 

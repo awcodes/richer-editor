@@ -24,7 +24,7 @@
     "require": {
         "php": "^8.2",
         "ext-dom": "*",
-        "filament/forms": "^4.3",
+        "filament/forms": "^5.0",
         "league/html-to-markdown": "*",
         "phiki/phiki": "^2.0",
         "spatie/laravel-package-tools": "^1.15.0"
@@ -34,10 +34,9 @@
         "laravel/pint": "^1.0",
         "nunomaduro/collision": "^8.0",
         "orchestra/testbench": "^9.0|^10.0",
-        "pestphp/pest": "^3.0",
-        "pestphp/pest-plugin-arch": "^3.0",
-        "pestphp/pest-plugin-laravel": "^3.0",
-        "pestphp/pest-plugin-livewire": "^3.0",
+        "pestphp/pest": "^4.3",
+        "pestphp/pest-plugin-laravel": "^4.0",
+        "pestphp/pest-plugin-livewire": "^4.0",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
@@ -59,9 +58,14 @@
         "analyse": "phpstan analyse",
         "lint": "pint",
         "refactor": "rector",
-        "test": "pest",
         "test:lint": "pint --test",
-        "test:refactor": "rector --dry-run"
+        "test:refactor": "rector --dry-run",
+        "test:unit": "pest",
+        "test": [
+            "@test:refactor",
+            "@test:lint",
+            "@test:unit"
+        ]
     },
     "extra": {
         "laravel": {
