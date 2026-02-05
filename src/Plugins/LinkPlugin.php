@@ -113,7 +113,7 @@ class LinkPlugin implements RichContentPlugin
                 ->action(function (array $arguments, array $data, RichEditor $component): void {
                     $isSingleCharacterSelection = ($arguments['editorSelection']['head'] ?? null) === ($arguments['editorSelection']['anchor'] ?? null);
 
-                    if (blank($data['href'])) {
+                    if (blank($data['href'] ?? null)) {
                         $component->runCommands(
                             [
                                 ...($isSingleCharacterSelection ? [EditorCommand::make(
