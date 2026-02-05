@@ -75,4 +75,10 @@ return [
             'no_results' => 'No results found.',
         ],
     ],
+    'faker' => [
+        'heading' => 'Insert Heading',
+        'paragraphs' => 'Insert Paragraphs',
+        'bullet_list' => 'Insert Bullet List',
+        'numbered_list' => 'Insert Numbered List',
+    ],
 ];
