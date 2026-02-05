@@ -52,6 +52,7 @@ use Awcodes\RicherEditor\Plugins\FullScreenPlugin;
 use Awcodes\RicherEditor\Plugins\IdPlugin;
 use Awcodes\RicherEditor\Plugins\LinkPlugin;
 use Awcodes\RicherEditor\Plugins\SourceCodePlugin;
+use Awcodes\RicherEditor\Plugins\FakerPlugin;
 
 RichEditor::make('content')
     ->plugins([
@@ -62,9 +63,10 @@ RichEditor::make('content')
         IdPlugin::make(), // Doesn't have a toolbar button
         LinkPlugin::make(), // Requires IdPlugin
         SourceCodePlugin::make(),
+        FakerPlugin::make(), // only works in local environment
     ])
     ->toolbarButtons([
-        ['embed', 'sourceCode', 'fullscreen', 'debug'],
+        ['embed', 'sourceCode', 'fullscreen', 'debug', 'fakeHeading', 'fakeParagraphs', 'fakeBulletList', 'fakeNumberedList'],
     ])
 ```
 
@@ -95,9 +97,20 @@ RichEditor::make('content')
                 'h3',
                 RichEditorTool::make('h4')...
             ]),
+        ToolGroup::make('devTools')
+            ->label('Developer Tools')
+            ->icon(Heroicon::Sparkles)
+            ->displayAsLabel()
+            ->items([
+                'debug', 
+                'fakeHeading', 
+                'fakeParagraphs', 
+                'fakeBulletList', 
+                'fakeNumberedList'
+            ]),
     ])
     ->toolbarButtons([
-        ['headingTools'],
+        ['headingTools', 'devTools'],
     ])
 ```
 
