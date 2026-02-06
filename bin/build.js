@@ -54,6 +54,8 @@ const extensions = [
     'code-block-shiki',
     'emoji',
     'slash-menu',
+    'grid-builder',
+    'grid-builder-column',
 ]
 
 extensions.forEach((extension) => {

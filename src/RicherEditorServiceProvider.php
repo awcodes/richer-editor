@@ -192,6 +192,16 @@ class RicherEditorServiceProvider extends PackageServiceProvider
                 id: static::$name.'/slash-menu',
                 path: $dist.'/slash-menu.js'
             )->loadedOnRequest(),
+
+            Js::make(
+                id: static::$name.'/grid-builder',
+                path: $dist.'/grid-builder.js'
+            )->loadedOnRequest(),
+
+            Js::make(
+                id: static::$name.'/grid-builder-column',
+                path: $dist.'/grid-builder-column.js'
+            )->loadedOnRequest(),
         ];
     }
 }

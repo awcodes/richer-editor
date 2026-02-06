@@ -75,6 +75,9 @@ return [
             'no_results' => 'No results found.',
         ],
     ],
+    'grid_builder' => [
+        'label' => 'Grid Builder',
+    ],
     'faker' => [
         'heading' => 'Insert Heading',
         'paragraphs' => 'Insert Paragraphs',

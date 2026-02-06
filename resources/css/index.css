@@ -2,6 +2,30 @@
     .embed.ProseMirror-selectednode {
         @apply outline-2 outline-offset-2 outline-dashed outline-gray-950/20 dark:outline-white/20;
     }
+
+    .grid-builder {
+        @apply grid gap-4;
+
+        .grid-builder-col {
+            @apply border border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-3 min-h-[3rem];
+
+            &:hover {
+                @apply border-primary-400 dark:border-primary-500;
+            }
+
+            + .grid-builder-col {
+                @apply mt-0;
+            }
+        }
+    }
+}
+
+.grid-builder-bubble-menu {
+    @apply flex items-center gap-1 rounded-lg bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 px-1 py-1 mb-2;
+
+    .grid-builder-bubble-btn {
+        @apply px-2 py-1 text-xs mt-0 font-medium rounded text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 whitespace-nowrap;
+    }
 }
 
 .fi-fo-rich-editor {
