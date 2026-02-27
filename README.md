@@ -1,3 +1,5 @@
+<img src="https://res.cloudinary.com/aw-codes/image/upload/c_scale,w_1200/v1772226864/thumbnails/awcodes-richer-editor.webp" alt="richer editor opengraph image" width="1200" height="auto" class="filament-hidden" style="width: 100%;" />
+
 [![Latest Version](https://img.shields.io/github/release/awcodes/richer-editor.svg?style=flat-square)](https://github.com/awcodes/richer-editor/releases)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Total Downloads](https://img.shields.io/packagist/dt/awcodes/richer-editor.svg?style=flat-square)](https://packagist.org/packages/awcodes/richer-editor)
@@ -22,9 +24,9 @@ composer require awcodes/richer-editor
 ```
 
 > [!IMPORTANT]
-> If you have not set up a custom theme and are using Filament Panels follow the instructions in the [Filament Docs](https://filamentphp.com/docs/4.x/styling/overview#creating-a-custom-theme) first.
+> If you have not set up a custom theme and are using Filament Panels, follow the instructions in the [Filament Docs](https://filamentphp.com/docs/4.x/styling/overview#creating-a-custom-theme) first.
 
-After setting up a custom theme add the plugin's css and views to your theme.css file or your app.css file if using the standalone packages.
+After setting up a custom theme, add the plugin's CSS and views to your theme.css file or your app.css file if using the standalone packages.
 
 ```css
 @import '../../../../vendor/awcodes/richer-editor/resources/css/index.css';
@@ -115,9 +117,9 @@ RichEditor::make('content')
 
 ### Prebuilt Tools
 
-* Heading Four Tool
-* Heading Five Tool
-* Heading Six Tool
+* Heading Four
+* Heading Five
+* Heading Six
 
 ```php
 use Awcodes\RicherEditor\Tools\HeadingFourTool;
@@ -147,7 +149,7 @@ RichEditor::make('content')
         HighlightedCodeBlock::class,
     ])
 
-// when rendering the content you can change the theme using any of Phiki's supported themes. See https://phiki.dev/multi-themes
+// when rendering the content, you can change the theme using any of Phiki's supported themes. See https://phiki.dev/multi-themes
 
 use Awcodes\RicherEditor\Blocks\HighlightedCodeBlock;
 use Phiki\Theme\Theme;
@@ -270,10 +272,6 @@ $richContent = RichContentFaker::make()
 ```bash
 composer test
 ```
-
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
 ## Contributing
 
