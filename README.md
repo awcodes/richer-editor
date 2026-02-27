@@ -5,7 +5,6 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/awcodes/richer-editor.svg?style=flat-square)](https://packagist.org/packages/awcodes/richer-editor)
 ![GitHub Repo stars](https://img.shields.io/github/stars/awcodes/richer-editor?style=flat-square)
 
-
 # Richer Editor 
 
 A collection of extensions and tools to enhance the Filament Rich Editor field.
