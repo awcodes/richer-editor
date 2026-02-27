@@ -1,6 +1,4 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/awcodes/richer-editor.svg?style=flat-square)](https://packagist.org/packages/awcodes/richer-editor)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/awcodes/richer-editor/run-tests.yml?branch=2.x&label=tests&style=flat-square)](https://github.com/awcodes/richer-editor/actions?query=workflow%3Arun-tests+branch%3A2.x)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/awcodes/richer-editor/fix-php-code-style-issues.yml?branch=2.x&label=code%20style&style=flat-square)](https://github.com/awcodes/richer-editor/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3A2.x)
 [![Total Downloads](https://img.shields.io/packagist/dt/awcodes/richer-editor.svg?style=flat-square)](https://packagist.org/packages/awcodes/richer-editor)
 
 # Richer Editor 
