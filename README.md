@@ -1,4 +1,5 @@
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/awcodes/richer-editor.svg?style=flat-square)](https://packagist.org/packages/awcodes/richer-editor)
+[![Latest Version](https://img.shields.io/github/releases/awcodes/richer-editor.svg?style=flat-square)](https://github.com/awcodes/richer-editor/releases)
+![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Total Downloads](https://img.shields.io/packagist/dt/awcodes/richer-editor.svg?style=flat-square)](https://packagist.org/packages/awcodes/richer-editor)
 
 # Richer Editor 
