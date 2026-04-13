@@ -9,6 +9,11 @@
 
 A collection of extensions and tools to enhance the Filament Rich Editor field.
 
+[![Latest Version](https://img.shields.io/github/release/awcodes/richer-editor.svg?style=flat-square&color=blue&label=Release)](https://github.com/awcodes/richer-editor/releases)
+[![MIT Licensed](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE.md)
+[![Total Downloads](https://img.shields.io/packagist/dt/awcodes/richer-editor.svg?style=flat-square&color=blue&label=Downloads)](https://packagist.org/packages/awcodes/richer-editor)
+[![GitHub Repo stars](https://img.shields.io/github/stars/awcodes/richer-editor?style=flat-square&color=blue&label=Stars)](https://github.com/awcodes/richer-editor/stargazers)
+
 ## Compatibility
 
 | Package Version | Filament Version |
