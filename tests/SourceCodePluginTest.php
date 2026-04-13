@@ -95,6 +95,14 @@ it('formats UTF-8 and non UTF-8 HTML source code in fill form', function () {
             $result = $originalClosure(['source' => $utf8html]);
 
             expect($result['source'])->toContain('<p>Hello World</p>');
+
+            // Test with HTML5 elements that are unknown to libxml's HTML4 DTD
+            $html5 = '<p>This is <mark>highlighted</mark> text with a <time>timestamp</time>.</p>';
+            $result = $originalClosure(['source' => $html5]);
+
+            expect($result['source'])
+                ->toContain('<mark>highlighted</mark>')
+                ->toContain('<time>timestamp</time>');
         } else {
             // If we can't find it, fail the test so we know
             throw new Exception('Could not find original closure in mountUsing static variables.');
