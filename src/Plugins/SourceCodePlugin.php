@@ -82,7 +82,10 @@ class SourceCodePlugin implements RichContentPlugin
                     $dom = new DOMDocument;
                     $dom->encoding = $this->getEncoding();
                     $dom->preserveWhiteSpace = false;
+                    libxml_use_internal_errors(true);
                     $dom->loadHTML(mb_convert_encoding($arguments['source'], 'HTML-ENTITIES', $this->getEncoding()));
+                    libxml_clear_errors();
+                    libxml_use_internal_errors(false);
                     $bodyContent = '';
                     foreach ($dom->getElementsByTagName('body')->item(0)->childNodes as $node) {
                         $bodyContent .= $dom->saveXML($node)."\n";
