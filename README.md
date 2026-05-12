@@ -21,6 +21,8 @@ A collection of extensions and tools to enhance the Filament Rich Editor field.
 | 1.x             | 4.x              |
 | 2.x             | 5.x              |
 
+<!-- [docs_start] -->
+
 ## Installation
 
 You can install the package via composer:
@@ -272,6 +274,8 @@ $richContent = RichContentFaker::make()
     ->asJson()
     ->asText();
 ```
+
+<!-- [docs_end] -->
 
 ## Testing
 
