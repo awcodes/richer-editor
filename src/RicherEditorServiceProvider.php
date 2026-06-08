@@ -144,11 +144,6 @@ class RicherEditorServiceProvider extends PackageServiceProvider
 
         return [
             Js::make(
-                id: static::$name.'/code-block-lowlight',
-                path: $dist.'/code-block-lowlight.js'
-            )->loadedOnRequest(),
-
-            Js::make(
                 id: static::$name.'/code-block-shiki',
                 path: $dist.'/code-block-shiki.js'
             )->loadedOnRequest(),
