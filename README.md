@@ -42,6 +42,7 @@ use Awcodes\RicherEditor\Plugins\IdPlugin;
 use Awcodes\RicherEditor\Plugins\LinkPlugin;
 use Awcodes\RicherEditor\Plugins\SourceCodePlugin;
 use Awcodes\RicherEditor\Plugins\FakerPlugin;
+use Awcodes\RicherEditor\Plugins\CodeBlockShikiPlugin;
 
 RichEditor::make('content')
     ->plugins([
@@ -53,9 +54,10 @@ RichEditor::make('content')
         LinkPlugin::make(), // Requires IdPlugin
         SourceCodePlugin::make(),
         FakerPlugin::make(), // only works in local environment
+        CodeBlockShikiPlugin::make(),
     ])
     ->toolbarButtons([
-        ['embed', 'sourceCode', 'fullscreen', 'debug', 'fakeHeading', 'fakeParagraphs', 'fakeBulletList', 'fakeNumberedList'],
+        ['embed', 'sourceCode', 'fullscreen', 'debug', 'fakeHeading', 'fakeParagraphs', 'fakeBulletList', 'fakeNumberedList', 'codeBlock'],
     ])
 ```
 
@@ -104,6 +106,8 @@ RichEditor::make('content')
 ```
 
 ### Prebuilt Tools
+
+The following tools are depreciated and will be removed in a future release. Please use the heading tools provided by Filament instead.
 
 * Heading Four Tool
 * Heading Five Tool
@@ -177,7 +181,7 @@ CodeBlockShikiPlugin::make()
 
 When you supply `themes()`, the light theme is rendered inline and the dark theme is exposed via CSS variables. The dark variant is applied automatically under Filament's dark mode by the styles in this package's `resources/css/index.css` — make sure it is imported into your theme (see [Installation](#installation)). Without `themes()`, only `defaultTheme` is used and code blocks stay a single theme.
 
-Each code block shows a language dropdown (on hover/focus) so authors can switch the highlighting language. By default it lists every language Shiki bundles; pass `languages()` to curate the list:
+Each code block shows a language dropdown so authors can switch the highlighting language. By default it lists every language Shiki bundles; pass `languages()` to curate the list:
 
 ```php
 CodeBlockShikiPlugin::make()
