@@ -2,6 +2,18 @@
     .embed.ProseMirror-selectednode {
         @apply outline-2 outline-offset-2 outline-dashed outline-gray-950/20 dark:outline-white/20;
     }
+
+    .richer-shiki-code-block {
+        @apply relative rounded-lg;
+
+        code {
+            @apply bg-transparent;
+        }
+
+        .richer-shiki-language-select {
+            @apply absolute top-2 right-2 z-10 rounded-md border border-gray-200 bg-white/90 py-1 pl-2 pr-6 font-sans text-xs text-gray-700 dark:border-white/10 dark:bg-gray-900/90 dark:text-gray-300;
+        }
+    }
 }
 
 .fi-fo-rich-editor {
@@ -81,4 +93,15 @@ html.dark .phiki span {
     font-style: var(--phiki-dark-font-style) !important;
     font-weight: var(--phiki-dark-font-weight) !important;
     text-decoration: var(--phiki-dark-text-decoration) !important;
+}
+
+/*
+    Shiki dual-theme switching: the CodeBlockShikiPlugin renders the light theme
+    inline and exposes the dark theme via CSS variables. Apply the dark variant
+    under Filament's class-based dark mode. Requires themes() to be configured.
+*/
+html.dark .tiptap .shiki,
+html.dark .tiptap .shiki span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
 }

@@ -46,8 +46,6 @@ After setting up a custom theme, add the plugin's CSS and views to your theme.cs
 
 > [!WARNING]
 > The following plugins are experimental and should not be used at the moment. See their docblocks for more information.
-> - CodeBlockLowlightPlugin
-> - CodeBlockShikiPlugin
 > - FigurePlugin
 > - VideoPlugin
 
@@ -62,6 +60,7 @@ use Awcodes\RicherEditor\Plugins\IdPlugin;
 use Awcodes\RicherEditor\Plugins\LinkPlugin;
 use Awcodes\RicherEditor\Plugins\SourceCodePlugin;
 use Awcodes\RicherEditor\Plugins\FakerPlugin;
+use Awcodes\RicherEditor\Plugins\CodeBlockShikiPlugin;
 
 RichEditor::make('content')
     ->plugins([
@@ -73,9 +72,10 @@ RichEditor::make('content')
         LinkPlugin::make(), // Requires IdPlugin
         SourceCodePlugin::make(),
         FakerPlugin::make(), // only works in local environment
+        CodeBlockShikiPlugin::make(),
     ])
     ->toolbarButtons([
-        ['embed', 'sourceCode', 'fullscreen', 'debug', 'fakeHeading', 'fakeParagraphs', 'fakeBulletList', 'fakeNumberedList'],
+        ['embed', 'sourceCode', 'fullscreen', 'debug', 'fakeHeading', 'fakeParagraphs', 'fakeBulletList', 'fakeNumberedList', 'codeBlock'],
     ])
 ```
 
@@ -125,9 +125,11 @@ RichEditor::make('content')
 
 ### Prebuilt Tools
 
-* Heading Four
-* Heading Five
-* Heading Six
+The following tools are depreciated and will be removed in a future release. Please use the heading tools provided by Filament instead.
+
+* Heading Four Tool
+* Heading Five Tool
+* Heading Six Tool
 
 ```php
 use Awcodes\RicherEditor\Tools\HeadingFourTool;
@@ -171,6 +173,57 @@ RichContentRenderer::make($content)
     ])
     ->toHtml()
 ```
+
+### Code Block Syntax Highlighting (Shiki)
+
+The `CodeBlockShikiPlugin` highlights code blocks in the editor using [Shiki](https://shiki.style). You can set the theme used to render code blocks, and optionally supply separate light/dark themes.
+
+Themes accept either a [Phiki `Theme`](https://phiki.dev) enum case or any bundled Shiki theme name as a string. See [Shiki's themes](https://shiki.style/themes) for the full list.
+
+```php
+use Awcodes\RicherEditor\Plugins\CodeBlockShikiPlugin;
+use Phiki\Theme\Theme;
+
+RichEditor::make('content')
+    ->plugins([
+        CodeBlockShikiPlugin::make()
+            ->defaultTheme(Theme::TokyoNight)
+            ->themes(light: Theme::GithubLight, dark: Theme::GithubDark),
+    ])
+
+// strings work too
+CodeBlockShikiPlugin::make()
+    ->defaultTheme('tokyo-night')
+    ->themes(light: 'github-light', dark: 'github-dark')
+```
+
+When you supply `themes()`, the light theme is rendered inline and the dark theme is exposed via CSS variables. The dark variant is applied automatically under Filament's dark mode by the styles in this package's `resources/css/index.css` — make sure it is imported into your theme (see [Installation](#installation)). Without `themes()`, only `defaultTheme` is used and code blocks stay a single theme.
+
+Each code block shows a language dropdown so authors can switch the highlighting language. By default it lists every language Shiki bundles; pass `languages()` to curate the list:
+
+```php
+CodeBlockShikiPlugin::make()
+    ->languages(['php', 'blade', 'js', 'ts', 'css', 'html', 'json', 'bash'])
+```
+
+#### Rendering outside the editor
+
+Shiki runs in the browser, so it cannot highlight code blocks when stored content is rendered server-side. The plugin ships a PHP Tiptap extension that highlights `codeBlock` nodes with [Phiki](https://phiki.dev) using the same themes. Register the plugin on the renderer with the same theme configuration to keep rendered output in sync with the editor:
+
+```php
+use Awcodes\RicherEditor\Plugins\CodeBlockShikiPlugin;
+use Filament\Forms\Components\RichEditor\RichContentRenderer;
+use Phiki\Theme\Theme;
+
+RichContentRenderer::make($content)
+    ->plugins([
+        CodeBlockShikiPlugin::make()
+            ->themes(light: Theme::GithubLight, dark: Theme::GithubDark),
+    ])
+    ->toHtml()
+```
+
+The rendered output uses the `.phiki` styles in `resources/css/index.css` for dark-mode switching, so no extra setup is required beyond importing that file.
 
 ## Rendering Usage
 
