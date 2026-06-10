@@ -2,6 +2,45 @@ import esbuild from 'esbuild'
 
 const isDev = process.argv.includes('--dev')
 
+// Redirect TipTap/ProseMirror imports to the instance bundled by Filament's
+// rich editor, exposed at window.FilamentRichEditor.tiptap. This avoids
+// duplicate bundling and prevents ProseMirror instanceof mismatches.
+// https://filamentphp.com/docs/5.x/forms/rich-editor#sharing-the-bundled-tiptapprosemirror-instance
+const tiptapSharedPlugin = {
+    name: 'tiptap-shared',
+    setup(build) {
+        const keys = {
+            '@tiptap/core': 'core',
+            '@tiptap/pm/state': 'pmState',
+            '@tiptap/pm/view': 'pmView',
+            '@tiptap/pm/model': 'pmModel',
+        }
+
+        build.onResolve({ filter: /^@tiptap\/(core|pm\/(state|view|model))$/ }, (args) => ({
+            path: args.path,
+            namespace: 'tiptap-shared',
+        }))
+
+        build.onLoad({ filter: /.*/, namespace: 'tiptap-shared' }, async (args) => {
+            const realModule = await import(args.path)
+            const namedExports = Object.keys(realModule).filter(
+                (key) => key !== '__esModule' && key !== 'default',
+            )
+
+            const key = keys[args.path]
+            let code = `const __module = window.FilamentRichEditor.tiptap.${key};\n`
+
+            if (namedExports.length) {
+                code += `export const { ${namedExports.join(', ')} } = __module;\n`
+            }
+
+            code += `export default __module?.default ?? __module;\n`
+
+            return { contents: code, loader: 'js' }
+        })
+    },
+}
+
 async function compile(options) {
     const context = await esbuild.context(options)
 
@@ -25,7 +64,7 @@ const defaultOptions = {
     treeShaking: true,
     target: ['es2020'],
     minify: !isDev,
-    plugins: [{
+    plugins: [tiptapSharedPlugin, {
         name: 'watchPlugin',
         setup: function (build) {
             build.onStart(() => {
@@ -44,7 +83,6 @@ const defaultOptions = {
 }
 
 const extensions = [
-    // 'code-block-lowlight',
     'embed',
     'id',
     'video',
