@@ -88,7 +88,7 @@ class SourceCodePlugin implements RichContentPlugin
                     libxml_use_internal_errors(false);
                     $bodyContent = '';
                     foreach ($dom->getElementsByTagName('body')->item(0)->childNodes as $node) {
-                        $bodyContent .= $dom->saveXML($node)."\n";
+                        $bodyContent .= $dom->saveHTML($node)."\n";
                     }
                     $prettySource = mb_trim($bodyContent);
 
