@@ -1,0 +1,43 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Expression on left side of \?\? is not nullable\.$#'
+			identifier: nullCoalesce.expr
+			count: 1
+			path: src/Extensions/Video.php
+
+		-
+			message: '#^Anonymous function never returns Illuminate\\Contracts\\Translation\\Translator so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 5
+			path: src/Plugins/EmbedPlugin.php
+
+		-
+			message: '#^Match expression does not handle remaining value\: mixed$#'
+			identifier: match.unhandled
+			count: 1
+			path: src/Plugins/FakerPlugin.php
+
+		-
+			message: '#^Anonymous function never returns Illuminate\\Contracts\\Translation\\Translator so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 6
+			path: src/Plugins/LinkPlugin.php
+
+		-
+			message: '#^Anonymous function never returns Illuminate\\Contracts\\Translation\\Translator so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 4
+			path: src/Plugins/VideoPlugin.php
+
+		-
+			message: '#^Anonymous function should return static\(Filament\\Forms\\Components\\RichEditor\\RichContentRenderer\) but returns Filament\\Forms\\Components\\RichEditor\\RichContentRenderer\.$#'
+			identifier: return.type
+			count: 2
+			path: src/RicherEditorServiceProvider.php
+
+		-
+			message: '#^Call to an undefined method Awcodes\\RicherEditor\\RicherEditorServiceProvider\:\:extraAttributes\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/RicherEditorServiceProvider.php
