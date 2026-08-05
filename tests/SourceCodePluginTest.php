@@ -117,11 +117,24 @@ it('keeps multiple custom blocks as siblings', function () {
     $result = $fillForm(['source' => '<div data-type="customBlock" data-config="{&quot;language&quot;:&quot;cpp&quot;,&quot;code&quot;:&quot;111&quot;}" data-id="highlighted_code"></div>'
         .'<div data-type="customBlock" data-config="{&quot;language&quot;:&quot;css&quot;,&quot;code&quot;:&quot;222&quot;}" data-id="highlighted_code"></div>']);
 
-    expect($result['source'])
-        ->toContain('&quot;code&quot;:&quot;111&quot;')
-        ->toContain('&quot;code&quot;:&quot;222&quot;')
-        ->and(mb_substr_count($result['source'], '<div data-type="customBlock"'))->toBe(2)
+    // Both blocks must be explicitly closed. A self closed <div/> is what the
+    // browser parser nests the following sibling into, losing it on setContent.
+    expect(mb_substr_count($result['source'], '<div data-type="customBlock"'))->toBe(2)
         ->and(mb_substr_count($result['source'], '</div>'))->toBe(2);
+
+    // Read the configs back off the parsed DOM rather than asserting on the raw
+    // string, since libxml quotes attributes containing double quotes
+    // differently by version.
+    $dom = new DOMDocument;
+    libxml_use_internal_errors(true);
+    $dom->loadHTML($result['source']);
+    libxml_clear_errors();
+    libxml_use_internal_errors(false);
+
+    $blocks = (new DOMXPath($dom))->query('//div[@data-type="customBlock"]');
+
+    expect(json_decode($blocks->item(0)->getAttribute('data-config'), true))->toBe(['language' => 'cpp', 'code' => '111'])
+        ->and(json_decode($blocks->item(1)->getAttribute('data-config'), true))->toBe(['language' => 'css', 'code' => '222']);
 });
 
 it('does not self close empty elements', function (string $source, string $expected) {
