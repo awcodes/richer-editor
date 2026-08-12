@@ -24,7 +24,7 @@
     "require": {
         "php": "^8.2",
         "ext-dom": "*",
-        "filament/forms": "^5.0",
+        "filament/forms": "^4.0|^5.0",
         "league/html-to-markdown": "*",
         "phiki/phiki": "^2.0",
         "spatie/laravel-package-tools": "^1.15.0"
