@@ -249,8 +249,8 @@ RichContentRenderer::make($content)
 > This should **NOT** be used globally as it will not work with Filament's rich content attributes when storing/reading content in the database when in a form context.
 
 ```php
-use Awcodes\RicherEditor\Support\RichContentRenderer;
 use Awcodes\RicherEditor\Plugins\PhikiCodeBlockPlugin;
+use Filament\Forms\Components\RichEditor\RichContentRenderer;
 
 RichContentRenderer::make($content)
     ->plugins([
@@ -296,12 +296,11 @@ $richContent = RichContentFaker::make()
         mergeTags: [], 
         highlight: false
     )
-    ->lead(pargraphs: 1, links: false)
-    ->small(pargraphs: 1, links: false)
+    ->lead(paragraphs: 1, links: false)
+    ->small(paragraphs: 1, links: false)
     ->list(count: 3, links: false, ordered: false)
     ->image(source: null, width: 1280, height: 720)
     ->details(open: false, links: false)
-    ->code(className: 'language-php')
     ->codeBlock(language: 'sh', prefix: 'language-')
     ->blockquote()
     ->hr()
