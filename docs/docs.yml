@@ -1,0 +1,16 @@
+version: 1
+
+title: Richer Editor
+
+navigation:
+  - index
+  - installation
+
+  - label: Editor
+    children:
+      - editor/plugins
+      - editor/tools
+      - editor/code-blocks
+
+  - rendering
+  - faker
