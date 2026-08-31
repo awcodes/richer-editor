@@ -90,7 +90,7 @@ class SourceCodePlugin implements RichContentPlugin
                     foreach ($dom->getElementsByTagName('body')->item(0)->childNodes as $node) {
                         $bodyContent .= $dom->saveHTML($node)."\n";
                     }
-                    $prettySource = mb_trim($bodyContent);
+                    $prettySource = trim($bodyContent);
 
                     return ['source' => $prettySource];
                 })
