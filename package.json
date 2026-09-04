@@ -3,10 +3,12 @@
     "type": "module",
     "scripts": {
         "dev": "node bin/build.js --dev",
-        "build": "node bin/build.js"
+        "build": "node bin/build.js",
+        "build:workbench": "npx @tailwindcss/cli --input ./workbench/resources/css/theme.css --output ./workbench/resources/dist/theme.css --minify"
     },
     "devDependencies": {
         "@floating-ui/dom": "^1.7.4",
+        "@tailwindcss/cli": "^4.1.13",
         "@tiptap/core": "^3.0.0",
         "@tiptap/extension-emoji": "^3.0.0",
         "@tiptap/extension-link": "^3.0.0",
@@ -15,6 +17,7 @@
         "esbuild": "^0.25.5",
         "prettier": "^3.5.3",
         "shiki": "^3.14.0",
+        "tailwindcss": "^4.1.13",
         "tiptap-extension-code-block-shiki": "^1.0.0"
     }
 }

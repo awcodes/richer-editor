@@ -53,3 +53,20 @@ If the project maintainer has any additional requirements, you will find them li
 - **Send coherent history** - Make sure each individual commit in your pull request is meaningful. If you had to make multiple intermediate commits while developing, please [squash them](https://www.git-scm.com/book/en/v2/Git-Tools-Rewriting-History#Changing-Multiple-Commit-Messages) before submitting.
 
 **Happy coding**!
+
+## Development
+
+Install dependencies:
+
+    composer install
+
+Run the test suite:
+
+    composer test
+
+Start the Workbench application:
+
+    composer serve
+
+The Workbench opens at `/admin`. Sign in with `test@example.com` and
+`password`, then edit the seeded post to exercise Richer Editor.

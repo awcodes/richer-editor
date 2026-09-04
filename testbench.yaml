@@ -1,0 +1,42 @@
+laravel: '@testbench'
+
+providers:
+  - Workbench\App\Providers\Filament\AdminPanelProvider
+
+migrations:
+  - workbench/database/migrations
+
+seeders:
+  - Workbench\Database\Seeders\DatabaseSeeder
+
+env:
+  - APP_ENV=local
+  - APP_NAME='Richer Editor Workbench'
+  - AUTH_MODEL='Workbench\App\Models\User'
+
+workbench:
+  start: '/admin'
+  install: true
+  health: false
+  discovers:
+    web: true
+    api: false
+    commands: false
+    components: false
+    factories: true
+    views: false
+  build:
+    - asset-publish
+    - filament-assets
+    - create-sqlite-db
+    - db-wipe
+    - migrate-fresh
+    - sync-skeleton
+  assets:
+    - laravel-assets
+  sync:
+    - from: storage
+      to: workbench/storage
+      reverse: true
+    - from: workbench/resources/dist
+      to: public/workbench

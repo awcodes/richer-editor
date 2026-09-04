@@ -30,6 +30,7 @@
         "spatie/laravel-package-tools": "^1.15.0"
     },
     "require-dev": {
+        "filament/filament": "^4.0|^5.0",
         "larastan/larastan": "^3.0",
         "laravel/pint": "^1.0",
         "nunomaduro/collision": "^8.0",
@@ -50,11 +51,17 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Awcodes\\RicherEditor\\Tests\\": "tests/"
+            "Awcodes\\RicherEditor\\Tests\\": "tests/",
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
         }
     },
     "scripts": {
-        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+        "post-autoload-dump": [
+            "@clear",
+            "@prepare"
+        ],
         "analyse": "phpstan analyse",
         "lint": "pint",
         "refactor": "rector",
@@ -65,6 +72,18 @@
             "@test:refactor",
             "@test:lint",
             "@test:unit"
+        ],
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": [
+            "npm install --no-audit --no-fund",
+            "npm run build:workbench",
+            "@php vendor/bin/testbench workbench:build --ansi"
+        ],
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "@build",
+            "@php vendor/bin/testbench serve --ansi"
         ]
     },
     "extra": {
