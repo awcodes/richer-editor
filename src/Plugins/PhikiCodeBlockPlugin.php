@@ -13,21 +13,21 @@ use Tiptap\Core\Extension;
 
 class PhikiCodeBlockPlugin implements RichContentPlugin
 {
-    protected Theme|string|array|null $theme = null;
+    protected Theme | string | array | null $theme = null;
 
     public static function make(): static
     {
         return app(static::class);
     }
 
-    public function theme(Theme|string|array $theme): static
+    public function theme(Theme | string | array $theme): static
     {
         $this->theme = $theme;
 
         return $this;
     }
 
-    public function getTheme(): Theme|string|array|null
+    public function getTheme(): Theme | string | array | null
     {
         return $this->theme;
     }

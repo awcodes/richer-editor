@@ -87,7 +87,7 @@ class VideoPlugin implements RichContentPlugin
                 ])
                 ->schema([
                     TextInput::make('src')
-                        ->label(fn (): \Illuminate\Contracts\Translation\Translator|string|array => trans('richer-editor::richer-editor.video.url'))
+                        ->label(fn (): \Illuminate\Contracts\Translation\Translator | string | array => trans('richer-editor::richer-editor.video.url'))
                         ->live()
                         ->required(),
                     CheckboxList::make('options')
@@ -107,7 +107,7 @@ class VideoPlugin implements RichContentPlugin
                     Checkbox::make('responsive')
                         ->default(true)
                         ->live()
-                        ->label(fn (): \Illuminate\Contracts\Translation\Translator|string|array => trans('richer-editor::richer-editor.video.responsive'))
+                        ->label(fn (): \Illuminate\Contracts\Translation\Translator | string | array => trans('richer-editor::richer-editor.video.responsive'))
                         ->afterStateUpdated(function (callable $set, $state): void {
                             if ($state) {
                                 $set('width', '16');
@@ -122,12 +122,12 @@ class VideoPlugin implements RichContentPlugin
                         TextInput::make('width')
                             ->live()
                             ->required()
-                            ->label(fn (): \Illuminate\Contracts\Translation\Translator|string|array => trans('richer-editor::richer-editor.video.width'))
+                            ->label(fn (): \Illuminate\Contracts\Translation\Translator | string | array => trans('richer-editor::richer-editor.video.width'))
                             ->default('16'),
                         TextInput::make('height')
                             ->live()
                             ->required()
-                            ->label(fn (): \Illuminate\Contracts\Translation\Translator|string|array => trans('richer-editor::richer-editor.video.height'))
+                            ->label(fn (): \Illuminate\Contracts\Translation\Translator | string | array => trans('richer-editor::richer-editor.video.height'))
                             ->default('9'),
                     ])->columns(['md' => 2]),
                 ])

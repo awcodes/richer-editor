@@ -16,11 +16,11 @@ use Tiptap\Core\Extension;
 
 class CodeBlockShikiPlugin implements RichContentPlugin
 {
-    protected Theme|string|null $defaultTheme = null;
+    protected Theme | string | null $defaultTheme = null;
 
-    protected Theme|string|null $lightTheme = null;
+    protected Theme | string | null $lightTheme = null;
 
-    protected Theme|string|null $darkTheme = null;
+    protected Theme | string | null $darkTheme = null;
 
     /**
      * @var array<string>|null
@@ -36,7 +36,7 @@ class CodeBlockShikiPlugin implements RichContentPlugin
      * The theme used to render code blocks. Accepts a Phiki Theme enum case or
      * any bundled Shiki theme name.
      */
-    public function defaultTheme(Theme|string $theme): static
+    public function defaultTheme(Theme | string $theme): static
     {
         $this->defaultTheme = $theme;
 
@@ -47,7 +47,7 @@ class CodeBlockShikiPlugin implements RichContentPlugin
      * The light/dark themes to preload for code blocks. Accepts Phiki Theme
      * enum cases or any bundled Shiki theme names.
      */
-    public function themes(Theme|string $light, Theme|string $dark): static
+    public function themes(Theme | string $light, Theme | string $dark): static
     {
         $this->lightTheme = $light;
         $this->darkTheme = $dark;
@@ -99,7 +99,7 @@ class CodeBlockShikiPlugin implements RichContentPlugin
         ]);
 
         if ($params !== []) {
-            $src .= (str_contains($src, '?') ? '&' : '?').http_build_query($params);
+            $src .= (str_contains($src, '?') ? '&' : '?') . http_build_query($params);
         }
 
         return [$src];
@@ -134,7 +134,7 @@ class CodeBlockShikiPlugin implements RichContentPlugin
      *
      * @return Theme|string|array<string, Theme|string>
      */
-    protected function getRenderTheme(): Theme|string|array
+    protected function getRenderTheme(): Theme | string | array
     {
         if ($this->lightTheme !== null && $this->darkTheme !== null) {
             return [
@@ -146,7 +146,7 @@ class CodeBlockShikiPlugin implements RichContentPlugin
         return $this->defaultTheme ?? 'tokyo-night';
     }
 
-    protected function resolveTheme(Theme|string|null $theme): ?string
+    protected function resolveTheme(Theme | string | null $theme): ?string
     {
         return $theme instanceof Theme ? $theme->value : $theme;
     }

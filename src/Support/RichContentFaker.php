@@ -68,9 +68,9 @@ class RichContentFaker
             ->toText();
     }
 
-    public function heading(int|string|null $level = 2): static
+    public function heading(int | string | null $level = 2): static
     {
-        $this->output .= '<h'.(int) $level.'>'.Str::title(value: $this->faker->words(nb: mt_rand(3, 8), asText: true)).'</h'.(int) $level.'>';
+        $this->output .= '<h' . (int) $level . '>' . Str::title(value: $this->faker->words(nb: mt_rand(3, 8), asText: true)) . '</h' . (int) $level . '>';
 
         return $this;
     }
@@ -145,7 +145,7 @@ class RichContentFaker
             ->map(callback: fn (): string => $this->wrapWithElement(element: 'li', content: $this->generateParagraphs(links: $links)))
             ->implode(value: '');
 
-        $this->output .= '<'.$type.'>'.$items.'</'.$type.'>';
+        $this->output .= '<' . $type . '>' . $items . '</' . $type . '>';
 
         return $this;
     }
@@ -153,10 +153,10 @@ class RichContentFaker
     public function image(?string $source = null, ?int $width = 1280, ?int $height = 720): static
     {
         if (in_array(needle: $source, haystack: [null, '', '0'], strict: true)) {
-            $source = 'https://picsum.photos/'.$width.'/'.$height;
+            $source = 'https://picsum.photos/' . $width . '/' . $height;
         }
 
-        $this->output .= '<p><img src="'.$source.'" alt="'.$this->faker->sentence.'" /></p>';
+        $this->output .= '<p><img src="' . $source . '" alt="' . $this->faker->sentence . '" /></p>';
 
         return $this;
     }
@@ -165,7 +165,7 @@ class RichContentFaker
     {
         $content = $this->generateParagraphs(count: mt_rand(1, 3), links: $links);
 
-        $this->output .= '<details'.($open ? ' open' : null).'><summary>'.$this->faker->sentence().'</summary><div data-type="detailsContent">'.$content.'</div></details>';
+        $this->output .= '<details' . ($open ? ' open' : null) . '><summary>' . $this->faker->sentence() . '</summary><div data-type="detailsContent">' . $content . '</div></details>';
 
         return $this;
     }
@@ -179,7 +179,7 @@ class RichContentFaker
 
     public function blockquote(): static
     {
-        $this->output .= '<blockquote>'.$this->generateParagraphs(mt_rand(1, 3)).'</p>'.'</blockquote>';
+        $this->output .= '<blockquote>' . $this->generateParagraphs(mt_rand(1, 3)) . '</p>' . '</blockquote>';
 
         return $this;
     }
@@ -202,14 +202,14 @@ class RichContentFaker
     {
         $cols ??= mt_rand(3, 8);
 
-        $this->output .= '<table><thead><tr><th>'.collect($this->faker->words($cols))->implode('</th><th>').'</th></tr></thead><tbody><tr><td>'.collect($this->faker->words($cols))->implode('</td><td>').'</td></tr><tr><td>'.collect($this->faker->words($cols))->implode('</td><td>').'</td></tr></tbody></table>';
+        $this->output .= '<table><thead><tr><th>' . collect($this->faker->words($cols))->implode('</th><th>') . '</th></tr></thead><tbody><tr><td>' . collect($this->faker->words($cols))->implode('</td><td>') . '</td></tr><tr><td>' . collect($this->faker->words($cols))->implode('</td><td>') . '</td></tr></tbody></table>';
 
         return $this;
     }
 
     public function customBlock(string $id, ?array $config = null): static
     {
-        $this->output .= '<div data-type="customBlock" data-config="'.htmlspecialchars(json_encode($config), ENT_QUOTES, 'UTF-8').'" data-id="'.$id.'"></div>';
+        $this->output .= '<div data-type="customBlock" data-config="' . htmlspecialchars(json_encode($config), ENT_QUOTES, 'UTF-8') . '" data-id="' . $id . '"></div>';
 
         return $this;
     }
@@ -219,10 +219,10 @@ class RichContentFaker
      */
     public function grid(array $cols = [1, 1, 1], string $breakpoint = 'md'): static
     {
-        $this->output .= '<div class="grid-layout" data-cols="'.count(value: $cols).'" data-from-breakpoint="'.$breakpoint.'" style="grid-template-columns: repeat('.count(value: $cols).', 1fr);">';
+        $this->output .= '<div class="grid-layout" data-cols="' . count(value: $cols) . '" data-from-breakpoint="' . $breakpoint . '" style="grid-template-columns: repeat(' . count(value: $cols) . ', 1fr);">';
 
         foreach ($cols as $col) {
-            $this->output .= '<div class="grid-layout-col" data-col-span="'.$col.'" style="grid-column: span '.$col.';"><h2>'.Str::title(value: $this->faker->words(nb: mt_rand(3, 8), asText: true)).'</h2>'.$this->generateParagraphs(mt_rand(1, 3)).'</div>';
+            $this->output .= '<div class="grid-layout-col" data-col-span="' . $col . '" style="grid-column: span ' . $col . ';"><h2>' . Str::title(value: $this->faker->words(nb: mt_rand(3, 8), asText: true)) . '</h2>' . $this->generateParagraphs(mt_rand(1, 3)) . '</div>';
         }
 
         $this->output .= '</div>';
@@ -232,7 +232,7 @@ class RichContentFaker
 
     private function generateLink(): string
     {
-        return '<a href="'.$this->faker->url().'">'.$this->faker->words(mt_rand(3, 8), true).'</a>';
+        return '<a href="' . $this->faker->url() . '">' . $this->faker->words(mt_rand(3, 8), true) . '</a>';
     }
 
     private function generateParagraphs(
@@ -302,7 +302,7 @@ class RichContentFaker
 
         if (filled($mergeTags)) {
             foreach ($mergeTags as $tag) {
-                array_splice($textArray, mt_rand(1, $count - 1), 0, '{{ '.$tag.' }}');
+                array_splice($textArray, mt_rand(1, $count - 1), 0, '{{ ' . $tag . ' }}');
             }
         }
 
@@ -315,8 +315,8 @@ class RichContentFaker
 
     private function wrapWithElement(string $element, string $content, array $attributes = []): string
     {
-        $attrs = collect($attributes)->map(fn ($value, $key): string => $key.'="'.$value.'"')->implode(' ');
+        $attrs = collect($attributes)->map(fn ($value, $key): string => $key . '="' . $value . '"')->implode(' ');
 
-        return '<'.$element.($attrs ? ' '.$attrs : '').'>'.$content.'</'.$element.'>';
+        return '<' . $element . ($attrs ? ' ' . $attrs : '') . '>' . $content . '</' . $element . '>';
     }
 }

@@ -115,7 +115,7 @@ it('keeps multiple custom blocks as siblings', function () {
     $fillForm = sourceCodeFillForm();
 
     $result = $fillForm(['source' => '<div data-type="customBlock" data-config="{&quot;language&quot;:&quot;cpp&quot;,&quot;code&quot;:&quot;111&quot;}" data-id="highlighted_code"></div>'
-        .'<div data-type="customBlock" data-config="{&quot;language&quot;:&quot;css&quot;,&quot;code&quot;:&quot;222&quot;}" data-id="highlighted_code"></div>']);
+        . '<div data-type="customBlock" data-config="{&quot;language&quot;:&quot;css&quot;,&quot;code&quot;:&quot;222&quot;}" data-id="highlighted_code"></div>']);
 
     // Both blocks must be explicitly closed. A self closed <div/> is what the
     // browser parser nests the following sibling into, losing it on setContent.

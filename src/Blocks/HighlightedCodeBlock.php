@@ -44,7 +44,7 @@ class HighlightedCodeBlock extends RichContentCustomBlock
     {
         $language = is_string($config['language']) ? $config['language'] : $config['language']->value;
 
-        return 'Code Block ('.$language.')';
+        return 'Code Block (' . $language . ')';
     }
 
     public static function toPreviewHtml(array $config): string
