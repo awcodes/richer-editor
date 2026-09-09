@@ -25,7 +25,7 @@
         "php": "^8.2",
         "ext-dom": "*",
         "filament/forms": "^4.0|^5.0",
-        "league/html-to-markdown": "*",
+        "league/html-to-markdown": "^5.0",
         "phiki/phiki": "^2.0",
         "spatie/laravel-package-tools": "^1.15.0"
     },
