@@ -55,9 +55,7 @@ class TableOfContents extends RichContentRenderer
 
             $text = collect($node->content)->map(fn ($node): mixed => $node->text ?? null)->implode(' ');
 
-            if (! isset($node->attrs->id)) {
-                $node->attrs->id = str($text)->slug()->toString();
-            }
+            $node->attrs->id ??= str($text)->slug()->toString();
 
             $headings[] = [
                 'level' => $node->attrs->level,
