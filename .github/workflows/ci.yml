@@ -1,0 +1,119 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - 2.x
+    paths:
+      - "bin/**"
+      - "src/**"
+      - "config/**"
+      - "database/**"
+      - "resources/**"
+      - "routes/**"
+      - "tests/**"
+      - "workbench/**"
+      - "composer.json"
+      - "composer.lock"
+      - "package.json"
+      - "package-lock.json"
+      - "vite.config.*"
+      - "phpunit.xml*"
+      - "phpstan.neon*"
+      - "rector.php"
+      - "pint.json"
+      - ".github/workflows/**"
+  pull_request:
+    branches:
+      - 2.x
+    paths:
+      - "bin/**"
+      - "src/**"
+      - "config/**"
+      - "database/**"
+      - "resources/**"
+      - "routes/**"
+      - "tests/**"
+      - "workbench/**"
+      - "composer.json"
+      - "composer.lock"
+      - "package.json"
+      - "package-lock.json"
+      - "vite.config.*"
+      - "phpunit.xml*"
+      - "phpstan.neon*"
+      - "rector.php"
+      - "pint.json"
+      - ".github/workflows/**"
+
+# 2.x serves both Filament majors from one branch, so one caller covers both: the
+# matrix pins Filament per row and the shared workflow installs it before running the
+# suite. The legacy 1.x branch is frozen and keeps no CI of its own.
+jobs:
+  ci:
+    uses: awcodes/.github/.github/workflows/filament-plugin.yml@v1
+    with:
+      # All seven rows were checked against this package's transitive constraints
+      # before being committed: each resolves laravel/framework, orchestra/testbench,
+      # filament/*, nunomaduro/collision and phiki/phiki cleanly.
+      matrix: |
+        [
+          {"php":"8.5","laravel":"13.*","filament":"5.*","testbench":"11.*","dependencies":"prefer-stable"},
+          {"php":"8.4","laravel":"13.*","filament":"5.*","testbench":"11.*","dependencies":"prefer-stable"},
+          {"php":"8.5","laravel":"12.*","filament":"5.*","testbench":"10.*","dependencies":"prefer-stable"},
+          {"php":"8.4","laravel":"12.*","filament":"5.*","testbench":"10.*","dependencies":"prefer-stable"},
+          {"php":"8.3","laravel":"12.*","filament":"5.*","testbench":"10.*","dependencies":"prefer-stable"},
+          {"php":"8.4","laravel":"12.*","filament":"4.*","testbench":"10.*","dependencies":"prefer-stable"},
+          {"php":"8.3","laravel":"12.*","filament":"4.*","testbench":"10.*","dependencies":"prefer-stable"}
+        ]
+      # This package extends Filament's Rich Editor field, so its runtime require is
+      # filament/forms, not the panel package. Pin what it actually depends on rather
+      # than dragging the whole panel in to constrain one field.
+      #
+      # filament/filament stays in require-dev for the workbench panel, and the forms
+      # pin constrains it transitively: a "4.*" row resolves filament/filament 4.13.1,
+      # not 5.x. That is the intended behaviour, not a leak.
+      filament-package: filament/forms
+      run-tests: true
+      run-lint: true
+      run-static-analysis: true
+      run-reformat: true
+      # The suite does not read resources/dist: it passes identically with the
+      # directory removed entirely (72 tests, 144 assertions either way). Nothing to
+      # build before tests, so this stays false. Dist freshness is a separate concern,
+      # covered by the `assets` job below.
+      run-build: false
+
+  # Nine bundles under resources/dist are committed and shipped, so a change to
+  # resources/js or bin/build.js that lands without a rebuild silently publishes stale
+  # assets. The esbuild config is deterministic — a clean `npm ci && npm run build`
+  # reproduces all nine byte-for-byte — so rebuilding and diffing catches that on the
+  # PR rather than after a tag is cut. (The shared workflow's run-build input is a
+  # different thing: it builds assets for suites that need them, and checks nothing.)
+  assets:
+    name: Assets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build assets
+        run: npm run build
+
+      - name: Check that dist is current
+        run: |
+          if [ -n "$(git status --porcelain -- resources/dist)" ]; then
+            echo "::error::resources/dist is out of date. Run 'npm run build' and commit the result."
+            git --no-pager diff --stat -- resources/dist
+            git status --porcelain -- resources/dist
+            exit 1
+          fi
