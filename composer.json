@@ -62,15 +62,16 @@
             "@clear",
             "@prepare"
         ],
-        "analyse": "phpstan analyse",
         "lint": "pint",
         "refactor": "rector",
         "test:lint": "pint --test",
         "test:refactor": "rector --dry-run",
+        "test:types": "phpstan analyse",
         "test:unit": "pest",
         "test": [
             "@test:refactor",
             "@test:lint",
+            "@test:types",
             "@test:unit"
         ],
         "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
