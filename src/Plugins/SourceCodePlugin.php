@@ -24,7 +24,7 @@ class SourceCodePlugin implements RichContentPlugin
 
     protected ?Width $modalWidth = null;
 
-    protected string|Closure|null $encoding = null;
+    protected string | Closure | null $encoding = null;
 
     public static function make(): static
     {
@@ -88,7 +88,7 @@ class SourceCodePlugin implements RichContentPlugin
                     libxml_use_internal_errors(false);
                     $bodyContent = '';
                     foreach ($dom->getElementsByTagName('body')->item(0)->childNodes as $node) {
-                        $bodyContent .= $dom->saveHTML($node)."\n";
+                        $bodyContent .= $dom->saveHTML($node) . "\n";
                     }
                     $prettySource = trim($bodyContent);
 
@@ -129,7 +129,7 @@ class SourceCodePlugin implements RichContentPlugin
         return $this->modalWidth ?? Width::FiveExtraLarge;
     }
 
-    public function encoding(string|Closure $encoding): static
+    public function encoding(string | Closure $encoding): static
     {
         $this->encoding = $encoding;
 

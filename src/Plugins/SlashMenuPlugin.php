@@ -18,9 +18,9 @@ class SlashMenuPlugin implements RichContentPlugin
 {
     use EvaluatesClosures;
 
-    protected array|Closure|null $items = null;
+    protected array | Closure | null $items = null;
 
-    protected string|Closure|null $noResultsMessage = null;
+    protected string | Closure | null $noResultsMessage = null;
 
     public static function make(): static
     {
@@ -70,14 +70,14 @@ class SlashMenuPlugin implements RichContentPlugin
         return [];
     }
 
-    public function items(array|Closure $items): static
+    public function items(array | Closure $items): static
     {
         $this->items = $items;
 
         return $this;
     }
 
-    public function noResultsMessage(string|Closure $message): static
+    public function noResultsMessage(string | Closure $message): static
     {
         $this->noResultsMessage = $message;
 

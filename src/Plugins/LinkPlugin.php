@@ -86,13 +86,13 @@ class LinkPlugin implements RichContentPlugin
                     Grid::make(['md' => 3])
                         ->schema([
                             TextInput::make('href')
-                                ->label(fn (): array|\Illuminate\Contracts\Translation\Translator|string => trans('richer-editor::richer-editor.link.href'))
+                                ->label(fn (): array | \Illuminate\Contracts\Translation\Translator | string => trans('richer-editor::richer-editor.link.href'))
                                 ->columnSpan('full')
                                 ->validationAttribute('URL'),
                             TextInput::make('id')
-                                ->label(fn (): array|\Illuminate\Contracts\Translation\Translator|string => trans('richer-editor::richer-editor.link.id')),
+                                ->label(fn (): array | \Illuminate\Contracts\Translation\Translator | string => trans('richer-editor::richer-editor.link.id')),
                             Select::make('target')
-                                ->label(fn (): array|\Illuminate\Contracts\Translation\Translator|string => trans('richer-editor::richer-editor.link.target.label'))
+                                ->label(fn (): array | \Illuminate\Contracts\Translation\Translator | string => trans('richer-editor::richer-editor.link.target.label'))
                                 ->selectablePlaceholder(false)
                                 ->options([
                                     '' => trans('richer-editor::richer-editor.link.target.self'),
@@ -101,12 +101,12 @@ class LinkPlugin implements RichContentPlugin
                                     '_top' => trans('richer-editor::richer-editor.link.target.top'),
                                 ]),
                             TextInput::make('hreflang')
-                                ->label(fn (): array|\Illuminate\Contracts\Translation\Translator|string => trans('richer-editor::richer-editor.link.hreflang')),
+                                ->label(fn (): array | \Illuminate\Contracts\Translation\Translator | string => trans('richer-editor::richer-editor.link.hreflang')),
                             TextInput::make('rel')
-                                ->label(fn (): array|\Illuminate\Contracts\Translation\Translator|string => trans('richer-editor::richer-editor.link.rel'))
+                                ->label(fn (): array | \Illuminate\Contracts\Translation\Translator | string => trans('richer-editor::richer-editor.link.rel'))
                                 ->columnSpan('full'),
                             TextInput::make('referrerpolicy')
-                                ->label(fn (): array|\Illuminate\Contracts\Translation\Translator|string => trans('richer-editor::richer-editor.link.referrerpolicy'))
+                                ->label(fn (): array | \Illuminate\Contracts\Translation\Translator | string => trans('richer-editor::richer-editor.link.referrerpolicy'))
                                 ->columnSpan('full'),
                         ]),
                 ])

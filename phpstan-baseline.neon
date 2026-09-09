@@ -1,6 +1,12 @@
 parameters:
 	ignoreErrors:
 		-
+			message: '#^Parameter \#1 \$view of function view expects view\-string\|null, string given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Blocks/HighlightedCodeBlock.php
+
+		-
 			message: '#^Expression on left side of \?\? is not nullable\.$#'
 			identifier: nullCoalesce.expr
 			count: 1
@@ -41,3 +47,24 @@ parameters:
 			identifier: method.notFound
 			count: 1
 			path: src/RicherEditorServiceProvider.php
+
+		-
+			message: '''
+				#^Access to constant on deprecated class Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken\:
+				Use PreventRequestForgery instead\.$#
+			'''
+			identifier: classConstant.deprecatedClass
+			count: 1
+			path: workbench/app/Providers/Filament/AdminPanelProvider.php
+
+		-
+			message: '#^Return type \(array\<string, mixed\>\) of method Workbench\\Database\\Factories\\PostFactory\:\:definition\(\) should be compatible with return type \(array\<model property of Workbench\\App\\Models\\Post, mixed\>\) of method Illuminate\\Database\\Eloquent\\Factories\\Factory\<Workbench\\App\\Models\\Post\>\:\:definition\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: workbench/database/factories/PostFactory.php
+
+		-
+			message: '#^Return type \(array\<string, mixed\>\) of method Workbench\\Database\\Factories\\UserFactory\:\:definition\(\) should be compatible with return type \(array\<model property of Workbench\\App\\Models\\User, mixed\>\) of method Illuminate\\Database\\Eloquent\\Factories\\Factory\<Workbench\\App\\Models\\User\>\:\:definition\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: workbench/database/factories/UserFactory.php

@@ -46,7 +46,7 @@ class FullScreenPlugin implements RichContentPlugin
                 ->jsHandler('window.toggleRichEditorFullscreen($root)')
                 ->extraAttributes([
                     'class' => 'fullscreen-toggle',
-                    'x-load-js' => '[\''.FilamentAsset::getScriptSrc('richer-editor/fullscreen', 'awcodes/richer-editor').'\']',
+                    'x-load-js' => '[\'' . FilamentAsset::getScriptSrc('richer-editor/fullscreen', 'awcodes/richer-editor') . '\']',
                 ]),
         ];
     }

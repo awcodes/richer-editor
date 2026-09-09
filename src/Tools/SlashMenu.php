@@ -13,11 +13,11 @@ class SlashMenu extends RichEditorTool
 {
     protected string $view = 'richer-editor::components.rich-editor-slash-menu';
 
-    protected array|Closure|null $items = null;
+    protected array | Closure | null $items = null;
 
-    protected string|Closure|null $noResultsMessage = null;
+    protected string | Closure | null $noResultsMessage = null;
 
-    public function items(array|Closure|null $items): static
+    public function items(array | Closure | null $items): static
     {
         $this->items = $items;
 
@@ -42,7 +42,7 @@ class SlashMenu extends RichEditorTool
                     'id' => $item::getId(),
                     'label' => $item::getLabel(),
                     'schemaComponent' => $this->getEditor()->getKey(),
-                    'action' => 'isLoading = true; $wire.mountAction(\'customBlock\', { editorSelection, id: \''.$item::getId().'\', mode: \'insert\' }, { schemaComponent: \''.$this->getEditor()->getKey().'\' },)',
+                    'action' => 'isLoading = true; $wire.mountAction(\'customBlock\', { editorSelection, id: \'' . $item::getId() . '\', mode: \'insert\' }, { schemaComponent: \'' . $this->getEditor()->getKey() . '\' },)',
                     'icon' => $this->getEditor()->getTools()['customBlocks']->getIcon(),
                 ];
             }
@@ -50,12 +50,12 @@ class SlashMenu extends RichEditorTool
             $instance = $this->getEditor()->getTools()[$item] ?? null;
 
             if (! $instance) {
-                throw new Exception('SlashMenu item "'.$item.'" is not a valid tool or custom block.');
+                throw new Exception('SlashMenu item "' . $item . '" is not a valid tool or custom block.');
             }
 
             $action = is_string($instance->jsHandler)
                 ? $instance->jsHandler
-                : 'isLoading = true; $wire.mountAction(\''.$item.'\', { editorSelection, id: \''.$instance->getName().'\', mode: \'insert\' }, { schemaComponent: \''.$instance->getEditor()->getKey().'\' },)';
+                : 'isLoading = true; $wire.mountAction(\'' . $item . '\', { editorSelection, id: \'' . $instance->getName() . '\', mode: \'insert\' }, { schemaComponent: \'' . $instance->getEditor()->getKey() . '\' },)';
 
             return [
                 'type' => 'tool',

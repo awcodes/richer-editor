@@ -42,6 +42,8 @@ If the project maintainer has any additional requirements, you will find them li
 
 - **[PSR-2 Coding Standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)** - The easiest way to apply the conventions is to install [PHP Code Sniffer](https://pear.php.net/package/PHP_CodeSniffer).
 
+- **Run the checks before you push** - CI runs on the shared baseline in [`awcodes/.github`](https://github.com/awcodes/.github) and reports four checks: `Tests`, `Lint`, `Static Analysis` and `Reformat`, plus an `Assets` check that rebuilds `resources/dist` and fails if the committed bundles are stale. `composer test` runs the first four locally; `npm run build` covers the fifth. Style and refactoring are **checked, not auto-fixed** — if `Lint` or `Reformat` fails, run `composer lint` and `composer refactor` and commit the result.
+
 - **Add tests!** - Your patch won't be accepted if it doesn't have tests.
 
 - **Document any change in behaviour** - Make sure the `README.md` and any other relevant documentation are kept up-to-date.

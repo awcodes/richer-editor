@@ -59,7 +59,7 @@ class PrismDefenseTransformer extends AbstractTransformer
                 $classes = preg_replace('/\b(language|lang)-\S+\s*/', '', $classes);
                 $classes = trim(preg_replace('/\s+/', ' ', $classes));
 
-                return '<pre '.$beforeClass.'class="'.$classes.'"';
+                return '<pre ' . $beforeClass . 'class="' . $classes . '"';
             },
             $html
         );
