@@ -13,15 +13,6 @@ It covers three areas:
 - **When rendering** — macros on Filament's `RichContentRenderer` for linked headings, Markdown output and server-side code highlighting, plus a table-of-contents builder.
 - **While developing** — a rich content faker for seeders and tests, and a debug tool for inspecting editor state.
 
-## Compatibility
-
-| Package version | Filament version |
-|-----------------|------------------|
-| 1.x             | 4.x              |
-| 2.x             | 4.x & 5.x        |
-
-Richer Editor requires PHP 8.2 or later, the `dom` extension, and `filament/forms`. It also pulls in `phiki/phiki` for server-side syntax highlighting and `league/html-to-markdown` for Markdown output.
-
 ## Where to go next
 
 - [Installation](installation.md) — install the package and import its CSS.

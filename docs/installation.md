@@ -5,6 +5,15 @@ description: Install Richer Editor and import its CSS and views into your Filame
 
 # Installation
 
+## Compatibility
+
+| Filament version | Package version |
+|------------------|-----------------|
+| 4.x              | 1.x             |
+| 4.x & 5.x        | 2.x             |
+
+Richer Editor requires PHP 8.2 or later, the `dom` extension, and `filament/forms`. It also pulls in `phiki/phiki` for server-side syntax highlighting and `league/html-to-markdown` for Markdown output.
+
 ## Requiring the package
 
 Install the package via Composer:
