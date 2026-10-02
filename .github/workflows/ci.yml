@@ -51,7 +51,7 @@ on:
 # suite. The legacy 1.x branch is frozen and keeps no CI of its own.
 jobs:
   ci:
-    uses: awcodes/.github/.github/workflows/filament-plugin.yml@v1
+    uses: awcodes/.github/.github/workflows/filament-plugin.yml@ad63f1536b965fed92274516cb81f172b1d60e1a # v1.4.3
     with:
       # All seven rows were checked against this package's transitive constraints
       # before being committed: each resolves laravel/framework, orchestra/testbench,
