@@ -124,7 +124,7 @@ return ScreenshotSuite::make()
             ->visit('/admin/posts/1/edit')
             ->viewport(),
     ])
-    ->cardTemplates('https://github.com/awcodes/focus-templates/tree/v1.1.1/dist')
+    ->cardTemplates('https://github.com/awcodes/focus-templates/tree/v2.1.0/dist')
     ->cards([
         // Open Graph and the GitHub social preview share one 2400x1260 template; GitHub crops 30px top and bottom.
         Card::make('social')
@@ -141,4 +141,11 @@ return ScreenshotSuite::make()
             ->description($cardDescription)
             ->screenshots(['card-editor', 'card-editor'])
             ->sizes([Size::Filament]),
+
+        // Unbranded 16:9 image for aw.codes, which adds its own heading: the same screenshots, no text or logo.
+        Card::make('plain')
+            ->template('two-up-plain')
+            ->screenshots(['card-editor', 'card-editor'])
+            ->sizes([[2560, 1440]])
+            ->scale(1),
     ]);
