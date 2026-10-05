@@ -49,6 +49,8 @@ class PostInfolist
                                                 IdPlugin::make(),
                                             ])
                                             ->customBlocks([HighlightedCodeBlock::class])
+                                            // A macro registered by RicherEditorServiceProvider, which phpstan only sees when the app is booted.
+                                            // @phpstan-ignore method.notFound
                                             ->linkHeadings(level: 3)
                                             ->toHtml(),
                                     )),
