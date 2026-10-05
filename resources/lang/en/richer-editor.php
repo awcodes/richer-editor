@@ -32,6 +32,9 @@ return [
             'label' => 'Convert Figure to Image',
         ],
     ],
+    'fullscreen' => [
+        'label' => 'Fullscreen',
+    ],
     'id' => [
         'label' => 'ID',
     ],
