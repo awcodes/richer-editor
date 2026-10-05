@@ -18,6 +18,9 @@ RichEditor::make('content')
 
 `ToolGroup` collapses several toolbar buttons into a single dropdown. Register the groups with `tools()`, then place them by name in `toolbarButtons()` exactly as you would a normal button.
 
+![A Developer tools dropdown open in the toolbar, listing Source Code, Fullscreen, Debug, Insert Heading and Insert Paragraphs](../assets/tool-group-light.png#gh-light-mode-only)
+![A Developer tools dropdown open in the toolbar, listing Source Code, Fullscreen, Debug, Insert Heading and Insert Paragraphs](../assets/tool-group-dark.png#gh-dark-mode-only)
+
 ```php
 use Awcodes\RicherEditor\Tools\ToolGroup;
 use Filament\Forms\Components\RichEditor\RichEditorTool;

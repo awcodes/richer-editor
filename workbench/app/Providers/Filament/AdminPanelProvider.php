@@ -19,10 +19,21 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
 use Workbench\App\Filament\Pages\Auth\Login;
 
 class AdminPanelProvider extends PanelProvider
 {
+    public function register(): void
+    {
+        parent::register();
+
+        // RichContentRenderer::toHtml() sanitizes its output, and Filament's sanitizer drops iframes, so an app that
+        // renders EmbedPlugin content has to allow them. This one allows the iframe attributes the embed renders.
+        $this->app->extend(HtmlSanitizerConfig::class, fn (HtmlSanitizerConfig $config): HtmlSanitizerConfig => $config
+            ->allowElement('iframe', ['src', 'width', 'height', 'allow', 'class', 'style']));
+    }
+
     public function boot(): void
     {
         FilamentAsset::register([

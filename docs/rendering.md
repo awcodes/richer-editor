@@ -7,6 +7,9 @@ description: Macros and helpers for rendering stored rich content as linked head
 
 Richer Editor registers three macros on Filament's `RichContentRenderer`, available anywhere you render stored content.
 
+![A rendered post beside a table of contents built from its headings, with linked headings, a Phiki-highlighted code block and a responsive embed](assets/rendered-light.png#gh-light-mode-only)
+![A rendered post beside a table of contents built from its headings, with linked headings, a Phiki-highlighted code block and a responsive embed](assets/rendered-dark.png#gh-dark-mode-only)
+
 ## Linked headings
 
 Turn headings into anchor links:

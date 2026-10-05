@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Workbench\Database\Factories\PostFactory;
 
+/**
+ * @property int $id
+ * @property string $title
+ * @property array<string, mixed>|null $content
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ */
 class Post extends Model
 {
     /** @use HasFactory<PostFactory> */

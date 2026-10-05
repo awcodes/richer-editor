@@ -7,6 +7,9 @@ description: Extensions and tools that add embeds, emoji, source editing, slash 
 
 Richer Editor is a collection of plugins, tools and helpers for Filament's `RichEditor` field. Each piece is opt-in — you register only the plugins you want, and add their toolbar buttons yourself.
 
+![A Rich Editor with Richer Editor's toolbar: formatting buttons, a Headings dropdown, lists, a highlighted PHP code block with a language picker, embed and blocks buttons, and a Developer tools dropdown](assets/editor-light.png#gh-light-mode-only)
+![A Rich Editor with Richer Editor's toolbar: formatting buttons, a Headings dropdown, lists, a highlighted PHP code block with a language picker, embed and blocks buttons, and a Developer tools dropdown](assets/editor-dark.png#gh-dark-mode-only)
+
 It covers three areas:
 
 - **In the editor** — extra plugins (embeds, emoji, slash menu, full screen, source editing, syntax-highlighted code blocks), nested toolbar dropdowns, and tools for authoring.

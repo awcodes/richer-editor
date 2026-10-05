@@ -16,6 +16,9 @@ Both rely on the stylesheet from [Installation](../installation.md) for dark-mod
 
 Register `CodeBlockShikiPlugin` and place its `codeBlock` button:
 
+![A PHP code block in the editor, highlighted with the GitHub theme for the panel's colour scheme, with a PHP language dropdown in its corner](../assets/code-block-light.png#gh-light-mode-only)
+![A PHP code block in the editor, highlighted with the GitHub theme for the panel's colour scheme, with a PHP language dropdown in its corner](../assets/code-block-dark.png#gh-dark-mode-only)
+
 ```php
 use Awcodes\RicherEditor\Plugins\CodeBlockShikiPlugin;
 use Phiki\Theme\Theme;
