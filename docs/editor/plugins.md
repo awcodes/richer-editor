@@ -7,6 +7,12 @@ description: Register Richer Editor's plugins on a RichEditor field and add thei
 
 Plugins are registered per field with `plugins()`. Most contribute a toolbar button, which you then have to place yourself with `toolbarButtons()` — registering a plugin alone does not add it to the toolbar.
 
+![LinkPlugin's link dialog with URL, ID, Target, Hreflang, Rel and Referrer Policy fields](../assets/link-dialog-light.png#gh-light-mode-only)
+![LinkPlugin's link dialog with URL, ID, Target, Hreflang, Rel and Referrer Policy fields](../assets/link-dialog-dark.png#gh-dark-mode-only)
+
+![EmbedPlugin's embed dialog with a video URL, Controls and No Cookie options, a start time, the Responsive toggle, and width and height fields](../assets/embed-dialog-light.png#gh-light-mode-only)
+![EmbedPlugin's embed dialog with a video URL, Controls and No Cookie options, a start time, the Responsive toggle, and width and height fields](../assets/embed-dialog-dark.png#gh-dark-mode-only)
+
 ```php
 use Awcodes\RicherEditor\Plugins\CodeBlockShikiPlugin;
 use Awcodes\RicherEditor\Plugins\DebugPlugin;
@@ -59,6 +65,9 @@ RichEditor::make('content')
 
 `SlashMenuPlugin` adds a `/` menu inside the editor. Its trigger is a hidden-label tool, so there is no toolbar button to place.
 
+![The slash menu open under a typed /, listing Heading 2, Heading 3, Bullet list, Blockquote, Code block, Embed and Highlighted Code Block](../assets/slash-menu-light.png#gh-light-mode-only)
+![The slash menu open under a typed /, listing Heading 2, Heading 3, Bullet list, Blockquote, Code block, Embed and Highlighted Code Block](../assets/slash-menu-dark.png#gh-dark-mode-only)
+
 ```php
 use Awcodes\RicherEditor\Plugins\SlashMenuPlugin;
 
@@ -75,6 +84,9 @@ Both `items()` and `noResultsMessage()` accept a closure as well as a plain valu
 ## Source code editing
 
 `SourceCodePlugin` opens the field's HTML in a modal. Two options adjust it:
+
+![The Source Code modal showing the editor's HTML in a code editor, with Submit and Cancel buttons](../assets/source-code-light.png#gh-light-mode-only)
+![The Source Code modal showing the editor's HTML in a code editor, with Submit and Cancel buttons](../assets/source-code-dark.png#gh-dark-mode-only)
 
 ```php
 use Awcodes\RicherEditor\Plugins\SourceCodePlugin;

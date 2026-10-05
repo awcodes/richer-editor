@@ -12,7 +12,9 @@ use Filament\Tables\Table;
 use Workbench\App\Filament\Resources\Posts\Pages\CreatePost;
 use Workbench\App\Filament\Resources\Posts\Pages\EditPost;
 use Workbench\App\Filament\Resources\Posts\Pages\ListPosts;
+use Workbench\App\Filament\Resources\Posts\Pages\ViewPost;
 use Workbench\App\Filament\Resources\Posts\Schemas\PostForm;
+use Workbench\App\Filament\Resources\Posts\Schemas\PostInfolist;
 use Workbench\App\Filament\Resources\Posts\Tables\PostsTable;
 use Workbench\App\Models\Post;
 
@@ -27,6 +29,11 @@ class PostResource extends Resource
         return PostForm::configure($schema);
     }
 
+    public static function infolist(Schema $schema): Schema
+    {
+        return PostInfolist::configure($schema);
+    }
+
     public static function table(Table $table): Table
     {
         return PostsTable::configure($table);
@@ -37,6 +44,7 @@ class PostResource extends Resource
         return [
             'index' => ListPosts::route('/'),
             'create' => CreatePost::route('/create'),
+            'view' => ViewPost::route('/{record}'),
             'edit' => EditPost::route('/{record}/edit'),
         ];
     }

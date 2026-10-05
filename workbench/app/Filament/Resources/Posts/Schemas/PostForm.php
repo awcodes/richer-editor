@@ -20,6 +20,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Phiki\Theme\Theme;
 
 class PostForm
 {
@@ -28,11 +29,14 @@ class PostForm
         return $schema
             ->components([
                 TextInput::make('title')
-                    ->required(),
+                    ->required()
+                    ->extraFieldWrapperAttributes(['data-focus' => 'title-field']),
                 RichEditor::make('content')
                     ->label('Richer Editor')
                     ->plugins([
-                        CodeBlockShikiPlugin::make(),
+                        CodeBlockShikiPlugin::make()
+                            ->themes(light: Theme::GithubLight, dark: Theme::GithubDark)
+                            ->languages(['php', 'blade', 'js', 'ts', 'css', 'html', 'json', 'bash']),
                         DebugPlugin::make(),
                         EmbedPlugin::make(),
                         EmojiPlugin::make(),
@@ -40,17 +44,33 @@ class PostForm
                         FullScreenPlugin::make(),
                         IdPlugin::make(),
                         LinkPlugin::make(),
-                        SlashMenuPlugin::make(),
+                        SlashMenuPlugin::make()
+                            ->items([
+                                'h2',
+                                'h3',
+                                'bulletList',
+                                'blockquote',
+                                'codeBlock',
+                                'embed',
+                                HighlightedCodeBlock::class,
+                            ]),
                         SourceCodePlugin::make(),
                     ])
                     ->customBlocks([
                         HighlightedCodeBlock::class,
                     ])
                     ->tools([
+                        ToolGroup::make('headingTools')
+                            ->label('Headings')
+                            ->icon(Heroicon::H1)
+                            ->displayAsLabel()
+                            ->items(['h1', 'h2', 'h3'])
+                            ->extraAttributes(['data-focus-action' => 'heading-tools']),
                         ToolGroup::make('developerTools')
                             ->label('Developer tools')
                             ->icon(Heroicon::Sparkles)
                             ->displayAsLabel()
+                            ->extraAttributes(['data-focus-action' => 'developer-tools'])
                             ->items([
                                 'sourceCode',
                                 'fullscreen',
@@ -61,13 +81,14 @@ class PostForm
                     ])
                     ->toolbarButtons([
                         ['bold', 'italic', 'underline', 'strike', 'link'],
-                        ['h1', 'h2', 'h3'],
+                        ['headingTools'],
                         ['bulletList', 'orderedList', 'blockquote', 'codeBlock'],
                         ['embed', 'attachFiles', 'customBlocks'],
                         ['developerTools'],
                         ['slashMenu'],
                     ])
                     ->maxHeight('500px')
+                    ->extraFieldWrapperAttributes(['data-focus' => 'content-editor'])
                     ->columnSpanFull(),
             ]);
     }
