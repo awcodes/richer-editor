@@ -45,7 +45,7 @@ RichEditor::make('content')
 
 | Plugin | Toolbar button | Notes |
 |---|---|---|
-| `EmbedPlugin` | `embed` | Insert embedded media. |
+| `EmbedPlugin` | `embed` | Insert embedded media. To render embeds with `toHtml()`, allow them in the sanitizer — see [Rendering](../rendering.md#embeds). |
 | `LinkPlugin` | `link` | Replaces the link dialog with one that also sets `id`, `target`, `hreflang`, `rel` and `referrerpolicy`. |
 | `IdPlugin` | — | Registers an `id` attribute on headings and links. Needed for the id set in the link dialog to survive, and for anchor links generally. |
 | `EmojiPlugin` | — | Tiptap's emoji extension with emoticons enabled, so `:)` and friends become emoji as you type. |
