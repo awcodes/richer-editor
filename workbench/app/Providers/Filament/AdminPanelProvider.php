@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Workbench\App\Providers\Filament;
 
+use Awcodes\RicherEditor\Plugins\EmbedPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -29,9 +30,8 @@ class AdminPanelProvider extends PanelProvider
         parent::register();
 
         // RichContentRenderer::toHtml() sanitizes its output, and Filament's sanitizer drops iframes, so an app that
-        // renders EmbedPlugin content has to allow them. This one allows the iframe attributes the embed renders.
-        $this->app->extend(HtmlSanitizerConfig::class, fn (HtmlSanitizerConfig $config): HtmlSanitizerConfig => $config
-            ->allowElement('iframe', ['src', 'width', 'height', 'allow', 'class', 'style']));
+        // renders EmbedPlugin content has to allow them.
+        $this->app->extend(HtmlSanitizerConfig::class, fn (HtmlSanitizerConfig $config): HtmlSanitizerConfig => EmbedPlugin::allowEmbedsIn($config));
     }
 
     public function boot(): void

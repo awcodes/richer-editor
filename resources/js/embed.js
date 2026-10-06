@@ -91,8 +91,8 @@ export default Node.create({
         return ['div', this.options.HTMLAttributes, ['iframe', {
             class: HTMLAttributes.responsive ? 'responsive' : null,
             src: HTMLAttributes.src,
-            width: HTMLAttributes.responsive ? HTMLAttributes.width * 10 : HTMLAttributes.width,
-            height: HTMLAttributes.responsive ? HTMLAttributes.height * 10 : HTMLAttributes.height,
+            width: HTMLAttributes.width,
+            height: HTMLAttributes.height,
             allow: HTMLAttributes.allow,
             style: HTMLAttributes.responsive ? `aspect-ratio: ${HTMLAttributes.width} / ${HTMLAttributes.height}; width: 100%; height: auto; pointer-events: none;` : 'pointer-events: none;',
         }]];
