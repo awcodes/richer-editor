@@ -67,6 +67,33 @@ Both accept a `maxDepth` argument controlling how many heading levels are includ
 TableOfContents::make($content)->asHtml(maxDepth: 2);
 ```
 
+## Embeds
+
+`toHtml()` sanitizes its output, and Filament's sanitizer removes `<iframe>` elements. Without extra configuration, `EmbedPlugin` content renders as an empty `<div class="embed">`.
+
+`EmbedPlugin::allowEmbedsIn()` allows the iframe the embed renders. It keeps an iframe's `src` only when the URL is `https` and on one of the embed hosts: `www.youtube.com`, `www.youtube-nocookie.com` and `player.vimeo.com`. Apply it to Filament's sanitizer configuration in a service provider's `register()` method:
+
+```php
+use Awcodes\RicherEditor\Plugins\EmbedPlugin;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
+
+public function register(): void
+{
+    $this->app->extend(
+        HtmlSanitizerConfig::class,
+        fn (HtmlSanitizerConfig $config): HtmlSanitizerConfig => EmbedPlugin::allowEmbedsIn($config),
+    );
+}
+```
+
+Pass your own list of hosts as the second argument if you embed players from elsewhere:
+
+```php
+EmbedPlugin::allowEmbedsIn($config, [...EmbedPlugin::EMBED_HOSTS, 'media.example.com']);
+```
+
+The sanitizer configuration is shared by everything that sanitizes HTML through Filament, so this allows these iframes wherever Filament sanitizes, not only in rich content.
+
 ## Code blocks
 
 Rendering highlighted code is covered separately — see [Code blocks](editor/code-blocks.md).
