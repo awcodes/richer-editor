@@ -1,0 +1,70 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Parameter \#1 \$view of function view expects view\-string\|null, string given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Blocks/HighlightedCodeBlock.php
+
+		-
+			message: '#^Expression on left side of \?\? is not nullable\.$#'
+			identifier: nullCoalesce.expr
+			count: 1
+			path: src/Extensions/Video.php
+
+		-
+			message: '#^Anonymous function never returns Illuminate\\Contracts\\Translation\\Translator so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 5
+			path: src/Plugins/EmbedPlugin.php
+
+		-
+			message: '#^Match expression does not handle remaining value\: mixed$#'
+			identifier: match.unhandled
+			count: 1
+			path: src/Plugins/FakerPlugin.php
+
+		-
+			message: '#^Anonymous function never returns Illuminate\\Contracts\\Translation\\Translator so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 6
+			path: src/Plugins/LinkPlugin.php
+
+		-
+			message: '#^Anonymous function never returns Illuminate\\Contracts\\Translation\\Translator so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 4
+			path: src/Plugins/VideoPlugin.php
+
+		-
+			message: '#^Anonymous function should return static\(Filament\\Forms\\Components\\RichEditor\\RichContentRenderer\) but returns Filament\\Forms\\Components\\RichEditor\\RichContentRenderer\.$#'
+			identifier: return.type
+			count: 2
+			path: src/RicherEditorServiceProvider.php
+
+		-
+			message: '#^Call to an undefined method Awcodes\\RicherEditor\\RicherEditorServiceProvider\:\:extraAttributes\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/RicherEditorServiceProvider.php
+
+		-
+			message: '''
+				#^Access to constant on deprecated class Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken\:
+				Use PreventRequestForgery instead\.$#
+			'''
+			identifier: classConstant.deprecatedClass
+			count: 1
+			path: workbench/app/Providers/Filament/AdminPanelProvider.php
+
+		-
+			message: '#^Return type \(array\<string, mixed\>\) of method Workbench\\Database\\Factories\\PostFactory\:\:definition\(\) should be compatible with return type \(array\<model property of Workbench\\App\\Models\\Post, mixed\>\) of method Illuminate\\Database\\Eloquent\\Factories\\Factory\<Workbench\\App\\Models\\Post\>\:\:definition\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: workbench/database/factories/PostFactory.php
+
+		-
+			message: '#^Return type \(array\<string, mixed\>\) of method Workbench\\Database\\Factories\\UserFactory\:\:definition\(\) should be compatible with return type \(array\<model property of Workbench\\App\\Models\\User, mixed\>\) of method Illuminate\\Database\\Eloquent\\Factories\\Factory\<Workbench\\App\\Models\\User\>\:\:definition\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: workbench/database/factories/UserFactory.php

@@ -1,12 +1,39 @@
-# Please see the documentation for all configuration options:
-# https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
-
+# Dependabot config for a package on the shared CI baseline.
+# Copy to .github/dependabot.yml in the package repo.
 version: 2
 updates:
-
-  - package-ecosystem: "github-actions"
+  # Composer — keeps this package's dev tooling current (pint, phpstan/larastan,
+  # pest + plugins, rector, testbench). Grouped into one weekly PR to cut noise.
+  # The runtime `require` block is constrained loosely on purpose; review those bumps.
+  - package-ecosystem: composer
     directory: "/"
     schedule:
-      interval: "weekly"
-    labels:
-      - "dependencies"
+      interval: weekly
+    open-pull-requests-limit: 5
+    # Wait for a release to settle before opening a PR — longer for majors.
+    cooldown:
+      default-days: 7
+      semver-major-days: 14
+    groups:
+      dev-dependencies:
+        dependency-type: development
+      production-dependencies:
+        dependency-type: production
+
+  # GitHub Actions — covers the awcodes/.github shared workflow and any actions the
+  # package repo adds (release, changelog, etc.).
+  #
+  # The shared workflow is pinned to a commit SHA with a `# vX.Y.Z` comment, not the
+  # moving @v1 tag, so an upstream change reaches this repo only as a Dependabot PR that
+  # has to pass CI, never silently on the next run. Dependabot advances the SHA and the
+  # comment together to the newest release tag.
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    groups:
+      github-actions:
+        patterns:
+          - "*"

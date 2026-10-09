@@ -41,7 +41,7 @@ class RicherEditorServiceProvider extends PackageServiceProvider
             $this->getAssetPackageName()
         );
 
-        RichEditor::macro('maxHeight', function (int|string|null $value = '400px'): static {
+        RichEditor::macro('maxHeight', function (int | string | null $value = '400px'): static {
             $this->extraAttributes([
                 'style' => "max-height: {$value};",
                 'class' => 'has-max-height',
@@ -103,7 +103,7 @@ class RicherEditorServiceProvider extends PackageServiceProvider
                                 [
                                     'type' => 'link',
                                     'attrs' => [
-                                        'href' => '#'.$node->attrs->id,
+                                        'href' => '#' . $node->attrs->id,
                                         'class' => 'toc-link',
                                     ],
                                 ],
@@ -119,7 +119,7 @@ class RicherEditorServiceProvider extends PackageServiceProvider
                             [
                                 'type' => 'link',
                                 'attrs' => [
-                                    'href' => '#'.$node->attrs->id,
+                                    'href' => '#' . $node->attrs->id,
                                     'class' => 'toc-link',
                                 ],
                             ],
@@ -140,67 +140,62 @@ class RicherEditorServiceProvider extends PackageServiceProvider
     /** @return array<Asset> */
     protected function getAssets(): array
     {
-        $dist = __DIR__.'/../resources/dist';
+        $dist = __DIR__ . '/../resources/dist';
 
         return [
             Js::make(
-                id: static::$name.'/code-block-lowlight',
-                path: $dist.'/code-block-lowlight.js'
+                id: static::$name . '/code-block-shiki',
+                path: $dist . '/code-block-shiki.js'
             )->loadedOnRequest(),
 
             Js::make(
-                id: static::$name.'/code-block-shiki',
-                path: $dist.'/code-block-shiki.js'
+                id: static::$name . '/embed',
+                path: $dist . '/embed.js'
             )->loadedOnRequest(),
 
             Js::make(
-                id: static::$name.'/embed',
-                path: $dist.'/embed.js'
+                id: static::$name . '/id',
+                path: $dist . '/id.js'
             )->loadedOnRequest(),
 
             Js::make(
-                id: static::$name.'/id',
-                path: $dist.'/id.js'
+                id: static::$name . '/video',
+                path: $dist . '/video.js'
             )->loadedOnRequest(),
 
             Js::make(
-                id: static::$name.'/video',
-                path: $dist.'/video.js'
+                id: static::$name . '/fullscreen',
+                path: $dist . '/fullscreen.js'
             )->loadedOnRequest(),
 
             Js::make(
-                id: static::$name.'/fullscreen',
-                path: $dist.'/fullscreen.js'
+                id: static::$name . '/link',
+                path: $dist . '/link.js'
             )->loadedOnRequest(),
 
             Js::make(
-                id: static::$name.'/link',
-                path: $dist.'/link.js'
+                id: static::$name . '/figure',
+                path: $dist . '/figure.js'
             )->loadedOnRequest(),
 
             Js::make(
-                id: static::$name.'/figure',
-                path: $dist.'/figure.js'
+                id: static::$name . '/emoji',
+                path: $dist . '/emoji.js'
             )->loadedOnRequest(),
 
             Js::make(
-                id: static::$name.'/emoji',
-                path: $dist.'/emoji.js'
+                id: static::$name . '/slash-menu',
+                path: $dist . '/slash-menu.js'
             )->loadedOnRequest(),
 
             Js::make(
-                id: static::$name.'/slash-menu',
-                path: $dist.'/slash-menu.js'
+                id: static::$name . '/grid-builder',
+                path: $dist . '/grid-builder.js'
             )->loadedOnRequest(),
 
             Js::make(
-                id: static::$name.'/grid-builder',
-                path: $dist.'/grid-builder.js'
-            )->loadedOnRequest(),
-
-            Js::make(
-                id: static::$name.'/grid-builder-column',
-                path: $dist.'/grid-builder-column.js'
+                id: static::$name . '/grid-builder-column',
+                path: $dist . '/grid-builder-column.js'
             )->loadedOnRequest(),
         ];
     }

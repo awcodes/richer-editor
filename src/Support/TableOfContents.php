@@ -55,9 +55,7 @@ class TableOfContents extends RichContentRenderer
 
             $text = collect($node->content)->map(fn ($node): mixed => $node->text ?? null)->implode(' ');
 
-            if (! isset($node->attrs->id)) {
-                $node->attrs->id = str($text)->slug()->toString();
-            }
+            $node->attrs->id ??= str($text)->slug()->toString();
 
             $headings[] = [
                 'level' => $node->attrs->level,
@@ -110,11 +108,11 @@ class TableOfContents extends RichContentRenderer
             $prev <= $item['level'] ?: $toc .= str_repeat('</ul>', $prev - $item['level']);
             $prev >= $item['level'] ?: $toc .= '<ul>';
 
-            $toc .= '<li><a href="#'.$item['id'].'">'.$item['text'].'</a></li>';
+            $toc .= '<li><a href="#' . $item['id'] . '">' . $item['text'] . '</a></li>';
 
             $prev = $item['level'];
         }
 
-        return $toc.'</ul>';
+        return $toc . '</ul>';
     }
 }

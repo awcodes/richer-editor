@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Awcodes\RicherEditor\Plugins;
 
 use Awcodes\RicherEditor\Extensions\Embed;
+use Awcodes\RicherEditor\Support\EmbedSourceSanitizer;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Exception;
@@ -22,13 +23,38 @@ use Filament\Schemas\Components\Utilities\Get;
 use Filament\Support\Enums\Width;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Icons\Heroicon;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
 use Tiptap\Core\Extension;
 
 class EmbedPlugin implements RichContentPlugin
 {
+    /**
+     * The hosts the embed dialog generates player URLs for.
+     *
+     * @var array<string>
+     */
+    public const EMBED_HOSTS = [
+        'www.youtube.com',
+        'www.youtube-nocookie.com',
+        'player.vimeo.com',
+    ];
+
     public static function make(): static
     {
         return app(static::class);
+    }
+
+    /**
+     * RichContentRenderer::toHtml() sanitizes its output, and Filament's sanitizer removes iframes. This allows the
+     * iframe the embed renders, with its src limited to https URLs on the given hosts.
+     *
+     * @param  array<string>  $hosts
+     */
+    public static function allowEmbedsIn(HtmlSanitizerConfig $config, array $hosts = self::EMBED_HOSTS): HtmlSanitizerConfig
+    {
+        return $config
+            ->allowElement('iframe', ['src', 'width', 'height', 'allow', 'class', 'style'])
+            ->withAttributeSanitizer(new EmbedSourceSanitizer(array_map(strtolower(...), $hosts)));
     }
 
     /**
@@ -84,7 +110,7 @@ class EmbedPlugin implements RichContentPlugin
                 ])
                 ->schema([
                     TextInput::make('src')
-                        ->label(fn (): \Illuminate\Contracts\Translation\Translator|string|array => trans('richer-editor::richer-editor.embed.url'))
+                        ->label(fn (): \Illuminate\Contracts\Translation\Translator | string | array => trans('richer-editor::richer-editor.embed.url'))
                         ->live()
                         ->required(),
                     CheckboxList::make('options')
@@ -125,7 +151,7 @@ class EmbedPlugin implements RichContentPlugin
                             ];
                         }),
                     TimePicker::make('start_at')
-                        ->label(fn (): \Illuminate\Contracts\Translation\Translator|string|array => trans('richer-editor::richer-editor.embed.start_at'))
+                        ->label(fn (): \Illuminate\Contracts\Translation\Translator | string | array => trans('richer-editor::richer-editor.embed.start_at'))
                         ->live()
                         ->date(false)
                         ->visible(fn (Get $get): bool => str_contains((string) $get('src'), 'youtu'))
@@ -135,9 +161,9 @@ class EmbedPlugin implements RichContentPlugin
                             }
 
                             $state = CarbonInterval::seconds($state)->cascade();
-                            $component->state(Carbon::parse($state->h.':'.$state->i.':'.$state->s)->format('Y-m-d H:i:s'));
+                            $component->state(Carbon::parse($state->h . ':' . $state->i . ':' . $state->s)->format('Y-m-d H:i:s'));
                         })
-                        ->dehydrateStateUsing(function ($state): int|float {
+                        ->dehydrateStateUsing(function ($state): int | float {
                             if (! $state) {
                                 return 0;
                             }
@@ -147,7 +173,7 @@ class EmbedPlugin implements RichContentPlugin
                     Checkbox::make('responsive')
                         ->default(true)
                         ->live()
-                        ->label(fn (): \Illuminate\Contracts\Translation\Translator|string|array => trans('richer-editor::richer-editor.embed.responsive'))
+                        ->label(fn (): \Illuminate\Contracts\Translation\Translator | string | array => trans('richer-editor::richer-editor.embed.responsive'))
                         ->afterStateUpdated(function (callable $set, $state): void {
                             if ($state) {
                                 $set('width', '16');
@@ -162,12 +188,12 @@ class EmbedPlugin implements RichContentPlugin
                         TextInput::make('width')
                             ->live()
                             ->required()
-                            ->label(fn (): \Illuminate\Contracts\Translation\Translator|string|array => trans('richer-editor::richer-editor.embed.width'))
+                            ->label(fn (): \Illuminate\Contracts\Translation\Translator | string | array => trans('richer-editor::richer-editor.embed.width'))
                             ->default('16'),
                         TextInput::make('height')
                             ->live()
                             ->required()
-                            ->label(fn (): \Illuminate\Contracts\Translation\Translator|string|array => trans('richer-editor::richer-editor.embed.height'))
+                            ->label(fn (): \Illuminate\Contracts\Translation\Translator | string | array => trans('richer-editor::richer-editor.embed.height'))
                             ->default('9'),
                     ])->columns(['md' => 2]),
                 ])

@@ -17,6 +17,7 @@
 <x-filament::dropdown
     class="fi-fo-rich-editor-tool"
     width="auto"
+    :shift="true"
 >
     <x-slot:trigger>
         <button {!! $attributes->toHtml() !!}>
