@@ -11,6 +11,7 @@ use Awcodes\RicherEditor\Plugins\EmbedPlugin;
 use Awcodes\RicherEditor\Plugins\EmojiPlugin;
 use Awcodes\RicherEditor\Plugins\FakerPlugin;
 use Awcodes\RicherEditor\Plugins\FullScreenPlugin;
+use Awcodes\RicherEditor\Plugins\GridBuilderPlugin;
 use Awcodes\RicherEditor\Plugins\IdPlugin;
 use Awcodes\RicherEditor\Plugins\LinkPlugin;
 use Awcodes\RicherEditor\Plugins\SlashMenuPlugin;
@@ -42,6 +43,7 @@ class PostForm
                         EmojiPlugin::make(),
                         FakerPlugin::make(),
                         FullScreenPlugin::make(),
+                        GridBuilderPlugin::make(),
                         IdPlugin::make(),
                         LinkPlugin::make(),
                         SlashMenuPlugin::make()
@@ -83,7 +85,7 @@ class PostForm
                         ['bold', 'italic', 'underline', 'strike', 'link'],
                         ['headingTools'],
                         ['bulletList', 'orderedList', 'blockquote', 'codeBlock'],
-                        ['embed', 'attachFiles', 'customBlocks'],
+                        ['embed', 'attachFiles', 'customBlocks', 'gridBuilder'],
                         ['developerTools'],
                         ['slashMenu'],
                     ])

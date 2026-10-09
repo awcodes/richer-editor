@@ -2,13 +2,49 @@ import { Node } from "@tiptap/core";
 import { Plugin, PluginKey, TextSelection } from "@tiptap/pm/state";
 
 const BUTTON_DEFS = [
-    { label: "Add Before", command: "addColumnBefore", hideWhenFirst: false, hideWhenLast: false, hideWhenSpanOne: false },
-    { label: "Add After", command: "addColumnAfter", hideWhenFirst: false, hideWhenLast: false, hideWhenSpanOne: false },
-    { label: "Delete", command: "deleteColumn", hideWhenFirst: false, hideWhenLast: false, hideWhenSpanOne: false },
-    { label: "Merge \u2190", command: "mergeColumnLeft", hideWhenFirst: true, hideWhenLast: false, hideWhenSpanOne: false },
-    { label: "Merge \u2192", command: "mergeColumnRight", hideWhenFirst: false, hideWhenLast: true, hideWhenSpanOne: false },
-    { label: "Split", command: "splitColumn", hideWhenFirst: false, hideWhenLast: false, hideWhenSpanOne: true },
-];
+    {
+        label: ' \u2190 Merge',
+        command: 'mergeColumnLeft',
+        hideWhenFirst: true,
+        hideWhenLast: false,
+        hideWhenSpanOne: false,
+    },
+    {
+        label: 'Add Before',
+        command: 'addColumnBefore',
+        hideWhenFirst: false,
+        hideWhenLast: false,
+        hideWhenSpanOne: false,
+    },
+    {
+        label: 'Add After',
+        command: 'addColumnAfter',
+        hideWhenFirst: false,
+        hideWhenLast: false,
+        hideWhenSpanOne: false,
+    },
+    {
+        label: 'Delete',
+        command: 'deleteColumn',
+        hideWhenFirst: false,
+        hideWhenLast: false,
+        hideWhenSpanOne: false,
+    },
+    {
+        label: 'Split',
+        command: 'splitColumn',
+        hideWhenFirst: false,
+        hideWhenLast: false,
+        hideWhenSpanOne: true,
+    },
+    {
+        label: 'Merge \u2192',
+        command: 'mergeColumnRight',
+        hideWhenFirst: false,
+        hideWhenLast: true,
+        hideWhenSpanOne: false,
+    },
+]
 
 function findParentNodeOfType(nodeType) {
     return (selection) => {
@@ -515,11 +551,31 @@ export default Node.create({
                                 return;
                             }
 
-                            // Position menu above the active column
+                            // Measure while displayed so offsetHeight is accurate.
+                            menu.style.display = "flex";
+
+                            // Position above the active column, flipping below when the
+                            // wrapper (which may be a clipping scroll container) has no room.
+                            const gap = 8;
                             const colRect = colDom.getBoundingClientRect();
                             const wrapperRect = wrapper.getBoundingClientRect();
-                            menu.style.top = `${colRect.top - wrapperRect.top - menu.offsetHeight - 26}px`;
-                            menu.style.left = `${colRect.left - wrapperRect.left}px`;
+                            const menuHeight = menu.offsetHeight;
+                            const fitsAbove =
+                                colRect.top - menuHeight - gap >= wrapperRect.top;
+                            const fitsBelow =
+                                colRect.bottom + menuHeight + gap <= wrapperRect.bottom;
+
+                            let top;
+                            if (fitsAbove) {
+                                top = colRect.top - wrapperRect.top - menuHeight - gap;
+                            } else if (fitsBelow) {
+                                top = colRect.bottom - wrapperRect.top + gap;
+                            } else {
+                                top = gap;
+                            }
+
+                            menu.style.top = `${top + wrapper.scrollTop}px`;
+                            menu.style.left = `${colRect.left - wrapperRect.left + wrapper.scrollLeft}px`;
 
                             const colIndex = getColumnIndex(
                                 gridResult.node,
@@ -545,8 +601,6 @@ export default Node.create({
 
                                 btnDef.el.style.display = hidden ? "none" : "";
                             });
-
-                            menu.style.display = "flex";
                         },
 
                         destroy() {

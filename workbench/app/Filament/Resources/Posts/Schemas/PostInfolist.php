@@ -7,6 +7,7 @@ namespace Workbench\App\Filament\Resources\Posts\Schemas;
 use Awcodes\RicherEditor\Blocks\HighlightedCodeBlock;
 use Awcodes\RicherEditor\Plugins\CodeBlockShikiPlugin;
 use Awcodes\RicherEditor\Plugins\EmbedPlugin;
+use Awcodes\RicherEditor\Plugins\GridBuilderPlugin;
 use Awcodes\RicherEditor\Plugins\IdPlugin;
 use Awcodes\RicherEditor\Support\TableOfContents;
 use Filament\Forms\Components\RichEditor\RichContentRenderer;
@@ -46,6 +47,7 @@ class PostInfolist
                                                 CodeBlockShikiPlugin::make()
                                                     ->themes(light: Theme::GithubLight, dark: Theme::GithubDark),
                                                 EmbedPlugin::make(),
+                                                GridBuilderPlugin::make(),
                                                 IdPlugin::make(),
                                             ])
                                             ->customBlocks([HighlightedCodeBlock::class])

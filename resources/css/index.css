@@ -33,7 +33,7 @@
 }
 
 .grid-builder-bubble-menu {
-    @apply flex items-center gap-1 rounded-lg bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 px-1 py-1 mb-2;
+    @apply z-20 flex items-center gap-1 rounded-lg bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 px-1 py-1;
 
     .grid-builder-bubble-btn {
         @apply px-2 py-1 text-xs mt-0 font-medium rounded text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 whitespace-nowrap;
