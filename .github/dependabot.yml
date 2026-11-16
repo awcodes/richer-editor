@@ -37,6 +37,16 @@ updates:
     cooldown:
       default-days: 7
       semver-major-days: 14
+    # @tiptap/extension-link 3.31.4+ imports @tiptap/pm/history and @tiptap/pm/transform.
+    # Filament shares only core, pmState, pmView and pmModel on
+    # window.FilamentRichEditor.tiptap, so bin/build.js would bundle a private ProseMirror
+    # into link.js, and Link's `instanceof ReplaceStep` / isHistoryTransaction checks would
+    # silently fail against the editor's own copy. The @tiptap packages peer-depend on each
+    # other at exact versions, so the whole family stays on 3.31.3 until Filament shares
+    # those modules too.
+    ignore:
+      - dependency-name: "@tiptap/*"
+        versions: [">=3.31.4"]
     groups:
       npm:
         update-types: ["minor", "patch"]
