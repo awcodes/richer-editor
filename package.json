@@ -16,7 +16,7 @@
         "crypto": "^1.0.1",
         "esbuild": "^0.28.2",
         "prettier": "^3.9.10",
-        "shiki": "^3.14.0",
+        "shiki": "^4.6.0",
         "tailwindcss": "^4.1.13",
         "tiptap-extension-code-block-shiki": "^1.0.0"
     }
