@@ -23,6 +23,9 @@ on:
       - "rector.php"
       - "pint.json"
       - ".github/workflows/**"
+      # The ruleset requires `All Checks`, so a change that runs no CI cannot
+      # merge without an admin override. A Dependabot config change is one.
+      - ".github/dependabot.yml"
   pull_request:
     branches:
       - 2.x
@@ -45,6 +48,9 @@ on:
       - "rector.php"
       - "pint.json"
       - ".github/workflows/**"
+      # The ruleset requires `All Checks`, so a change that runs no CI cannot
+      # merge without an admin override. A Dependabot config change is one.
+      - ".github/dependabot.yml"
 
 # 2.x serves both Filament majors from one branch, so one caller covers both: the
 # matrix pins Filament per row and the shared workflow installs it before running the
