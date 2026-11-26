@@ -53,7 +53,11 @@ class TableOfContents extends RichContentRenderer
                 return;
             }
 
-            $text = collect($node->content)->map(fn ($node): mixed => $node->text ?? null)->implode(' ');
+            $text = trim(collect($node->content ?? [])->map(fn ($node): mixed => $node->text ?? null)->implode(' '));
+
+            if ($text === '') {
+                return;
+            }
 
             $node->attrs->id ??= str($text)->slug()->toString();
 
